@@ -8,17 +8,17 @@
 
 package lt.atea.vaiisis.authentication.model.xml;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlType;
 
 
 /**
  * <p>Java class for authenticationAttributePair complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="authenticationAttributePair">
  *   &lt;complexContent>
@@ -31,13 +31,11 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "authenticationAttributePair", namespace = "http://www.epaslaugos.lt/services/authentication", propOrder = {
-    "attribute",
-    "value"
+        "attribute",
+        "value"
 })
 public class AuthenticationAttributePair {
 
@@ -48,11 +46,9 @@ public class AuthenticationAttributePair {
 
     /**
      * Gets the value of the attribute property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AuthenticationAttribute }
-     *     
+     *
+     * @return possible object is
+     * {@link AuthenticationAttribute }
      */
     public AuthenticationAttribute getAttribute() {
         return attribute;
@@ -60,11 +56,9 @@ public class AuthenticationAttributePair {
 
     /**
      * Sets the value of the attribute property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AuthenticationAttribute }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link AuthenticationAttribute }
      */
     public void setAttribute(AuthenticationAttribute value) {
         this.attribute = value;
@@ -72,11 +66,9 @@ public class AuthenticationAttributePair {
 
     /**
      * Gets the value of the value property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getValue() {
         return value;
@@ -84,11 +76,9 @@ public class AuthenticationAttributePair {
 
     /**
      * Sets the value of the value property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setValue(String value) {
         this.value = value;

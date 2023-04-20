@@ -5,7 +5,7 @@
 // Generated on: 2013.01.15 at 01:18:30 PM EET 
 //
 
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.w3.org/2000/09/xmldsig#", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED, xmlns = {
-		@javax.xml.bind.annotation.XmlNs(prefix = "authentication", namespaceURI = "http://www.epaslaugos.lt/services/authentication"),
-		@javax.xml.bind.annotation.XmlNs(prefix = "dsig", namespaceURI = "http://www.w3.org/2000/09/xmldsig#") })
+@jakarta.xml.bind.annotation.XmlSchema(namespace = "http://www.w3.org/2000/09/xmldsig#", elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED, xmlns = {
+        @jakarta.xml.bind.annotation.XmlNs(prefix = "authentication", namespaceURI = "http://www.epaslaugos.lt/services/authentication"),
+        @jakarta.xml.bind.annotation.XmlNs(prefix = "dsig", namespaceURI = "http://www.w3.org/2000/09/xmldsig#")})
 package lt.atea.vaiisis.authentication.model.xml;

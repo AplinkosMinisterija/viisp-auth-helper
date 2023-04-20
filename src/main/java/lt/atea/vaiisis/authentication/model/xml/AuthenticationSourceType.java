@@ -8,13 +8,13 @@
 
 package lt.atea.vaiisis.authentication.model.xml;
 
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlEnum;
+import jakarta.xml.bind.annotation.XmlType;
 
 
 /**
  * <p>Java class for authenticationSourceType.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <pre>
@@ -24,7 +24,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
- * 
  */
 @XmlType(name = "authenticationSourceType", namespace = "http://www.epaslaugos.lt/services/authentication")
 @XmlEnum
@@ -32,12 +31,12 @@ public enum AuthenticationSourceType {
 
     SAML;
 
-    public String value() {
-        return name();
-    }
-
     public static AuthenticationSourceType fromValue(String v) {
         return valueOf(v);
+    }
+
+    public String value() {
+        return name();
     }
 
 }

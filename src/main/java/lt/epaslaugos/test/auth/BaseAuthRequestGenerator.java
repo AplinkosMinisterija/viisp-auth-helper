@@ -1,12 +1,12 @@
 package lt.epaslaugos.test.auth;
 
-import org.apache.commons.io.FileUtils;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
+import org.apache.commons.lang.StringUtils;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 import javax.xml.crypto.dsig.*;
 import javax.xml.crypto.dsig.dom.DOMSignContext;
 import javax.xml.crypto.dsig.keyinfo.KeyInfo;
@@ -22,15 +22,13 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.cert.X509Certificate;
 import java.util.*;
-
-import org.apache.commons.lang.StringUtils;
 
 @SuppressWarnings("restriction")
 public abstract class BaseAuthRequestGenerator {
@@ -46,7 +44,7 @@ public abstract class BaseAuthRequestGenerator {
             KeyStore keyStore = KeyStore.getInstance("JKS");
             keyStore.load(new ByteArrayInputStream(Base64.getDecoder().decode(System.getenv("KEYSTORE_BASE64"))), PASSWORD);
 
-            for (Enumeration<String> e = keyStore.aliases(); e.hasMoreElements();) {
+            for (Enumeration<String> e = keyStore.aliases(); e.hasMoreElements(); ) {
                 String alias = e.nextElement();
                 if (keyStore.isKeyEntry(alias)) {
                     privateKey = (PrivateKey) keyStore.getKey(alias, PASSWORD);
@@ -78,7 +76,7 @@ public abstract class BaseAuthRequestGenerator {
         final ByteArrayOutputStream output = new ByteArrayOutputStream();
         trans.transform(new DOMSource(node), new StreamResult(output));
 
-        return new String(output.toByteArray(), Charset.forName("UTF-8"));
+        return output.toString(StandardCharsets.UTF_8);
     }
 
     public void signNode(Node node, String uri) throws Exception {

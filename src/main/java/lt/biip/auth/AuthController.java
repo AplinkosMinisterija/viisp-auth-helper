@@ -1,44 +1,43 @@
 package lt.biip.auth;
 
-import lt.epaslaugos.test.auth.AuthRequestGenerator;
 import lt.epaslaugos.test.auth.AuthDataRequestGenerator;
 import lt.epaslaugos.test.auth.AuthDataResponseGenerator;
+import lt.epaslaugos.test.auth.AuthRequestGenerator;
 import lt.epaslaugos.test.auth.AuthResponseGenerator;
+import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.MediaType;
 
-import java.net.URL;
-import java.net.HttpURLConnection;
-import java.nio.charset.StandardCharsets;
-import java.io.OutputStream;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.lang.StringBuffer;
-import java.util.Map;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
-import org.json.JSONObject;
+import java.util.Map;
 
 @RestController
-@RequestMapping ("/auth")
+@RequestMapping("/auth")
 public class AuthController {
     private static String _sendSoapToEpaslaugos(String soap) throws Exception {
         URL url = new URL("https://www.epaslaugos.lt/portal/authenticationServices/auth");
-        HttpURLConnection http = (HttpURLConnection)url.openConnection();
+        HttpURLConnection http = (HttpURLConnection) url.openConnection();
         http.setRequestMethod("POST");
         http.setDoOutput(true);
         http.setRequestProperty("Content-Type", "text/xml");
-        
-        
+
+
         byte[] out = soap.getBytes(StandardCharsets.UTF_8);
         http.setFixedLengthStreamingMode(out.length);
-        
+
         http.connect();
-        try(OutputStream os = http.getOutputStream()) {
+        try (OutputStream os = http.getOutputStream()) {
             os.write(out);
         }
-        
+
         BufferedReader in = new BufferedReader(new InputStreamReader(http.getInputStream()));
         String inputLine;
         StringBuffer content = new StringBuffer();
@@ -52,12 +51,12 @@ public class AuthController {
         return content.toString();
     }
 
-    @PostMapping (path = "/sign", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> generateTicket(@RequestBody String customData){
+    @PostMapping(path = "/sign", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> generateTicket(@RequestBody String customData) {
         try {
             AuthRequestGenerator dataRequest = new AuthRequestGenerator();
             String body = dataRequest.generateSoap(dataRequest.generateRequest(customData));
-            String soap = this._sendSoapToEpaslaugos(body);
+            String soap = _sendSoapToEpaslaugos(body);
 
             AuthResponseGenerator dataResponse = new AuthResponseGenerator();
             String ticket = dataResponse.generateResponse(soap);
@@ -76,12 +75,12 @@ public class AuthController {
         }
     }
 
-    @GetMapping (path = "/data", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getAuthData(@RequestParam String ticket){
+    @GetMapping(path = "/data", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getAuthData(@RequestParam String ticket) {
         try {
             AuthDataRequestGenerator dataRequest = new AuthDataRequestGenerator();
             String body = dataRequest.generateSoap(dataRequest.generateRequest(ticket));
-            String soap = this._sendSoapToEpaslaugos(body);
+            String soap = _sendSoapToEpaslaugos(body);
 
             AuthDataResponseGenerator dataResponse = new AuthDataResponseGenerator();
             Map<String, String> userData = dataResponse.generateResponse(soap);

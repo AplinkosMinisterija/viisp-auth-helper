@@ -1,15 +1,12 @@
 package lt.epaslaugos.test.auth;
 
 import lt.atea.vaiisis.authentication.model.xml.AuthenticationDataResponseXml;
-import org.apache.commons.lang.StringUtils;
-import java.util.Map;
+
 import java.util.HashMap;
-import org.w3c.dom.Document;
-import org.json.JSONObject;
+import java.util.Map;
 
 /**
  * Extracts user info from XML.
- *
  */
 public class AuthDataResponseGenerator extends BaseAuthResponseGenerator {
     public Map generateResponse(String data) throws Exception {
@@ -29,7 +26,7 @@ public class AuthDataResponseGenerator extends BaseAuthResponseGenerator {
             String value = item.getValue();
             result.put(key, value);
         });
-        
+
         return result;
     }
 }

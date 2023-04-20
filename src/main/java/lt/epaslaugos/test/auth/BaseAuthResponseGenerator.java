@@ -1,13 +1,13 @@
 package lt.epaslaugos.test.auth;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.crypto.dsig.*;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
+
 import javax.xml.transform.stream.StreamSource;
 import java.io.StringReader;
-import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @SuppressWarnings("restriction")
 public abstract class BaseAuthResponseGenerator {
@@ -18,8 +18,8 @@ public abstract class BaseAuthResponseGenerator {
         Unmarshaller unmarshaller = jc.createUnmarshaller();
 
         Unmarshaller u = jc.createUnmarshaller();
-        StringBuffer xmlStr = new StringBuffer( file );
-        return unmarshaller.unmarshal(new StreamSource( new StringReader( xmlStr.toString() ) ));
+        StringBuffer xmlStr = new StringBuffer(file);
+        return unmarshaller.unmarshal(new StreamSource(new StringReader(xmlStr.toString())));
     }
 
     public String decodeSoap(String data) throws Exception {

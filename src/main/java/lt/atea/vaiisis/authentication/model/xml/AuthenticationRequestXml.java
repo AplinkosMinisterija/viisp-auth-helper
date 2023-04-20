@@ -8,25 +8,19 @@
 
 package lt.atea.vaiisis.authentication.model.xml;
 
+import jakarta.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.adapters.CollapsedStringAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlID;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -46,19 +40,17 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "pid",
-    "serviceTarget",
-    "authenticationProvider",
-    "authenticationAttribute",
-    "userInformation",
-    "postbackUrl",
-    "customData",
-    "signature"
+        "pid",
+        "serviceTarget",
+        "authenticationProvider",
+        "authenticationAttribute",
+        "userInformation",
+        "postbackUrl",
+        "customData",
+        "signature"
 })
 @XmlRootElement(name = "authenticationRequest", namespace = "http://www.epaslaugos.lt/services/authentication")
 public class AuthenticationRequestXml {
@@ -88,11 +80,9 @@ public class AuthenticationRequestXml {
 
     /**
      * Gets the value of the pid property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getPid() {
         return pid;
@@ -100,11 +90,9 @@ public class AuthenticationRequestXml {
 
     /**
      * Sets the value of the pid property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setPid(String value) {
         this.pid = value;
@@ -112,11 +100,9 @@ public class AuthenticationRequestXml {
 
     /**
      * Gets the value of the serviceTarget property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ServiceTargetXml }
-     *     
+     *
+     * @return possible object is
+     * {@link ServiceTargetXml }
      */
     public ServiceTargetXml getServiceTarget() {
         return serviceTarget;
@@ -124,11 +110,9 @@ public class AuthenticationRequestXml {
 
     /**
      * Sets the value of the serviceTarget property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ServiceTargetXml }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link ServiceTargetXml }
      */
     public void setServiceTarget(ServiceTargetXml value) {
         this.serviceTarget = value;
@@ -136,25 +120,23 @@ public class AuthenticationRequestXml {
 
     /**
      * Gets the value of the authenticationProvider property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the authenticationProvider property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getAuthenticationProvider().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link AuthenticationProviderXml }
-     * 
-     * 
      */
     public List<AuthenticationProviderXml> getAuthenticationProvider() {
         if (authenticationProvider == null) {
@@ -165,25 +147,23 @@ public class AuthenticationRequestXml {
 
     /**
      * Gets the value of the authenticationAttribute property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the authenticationAttribute property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getAuthenticationAttribute().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link AuthenticationAttribute }
-     * 
-     * 
      */
     public List<AuthenticationAttribute> getAuthenticationAttribute() {
         if (authenticationAttribute == null) {
@@ -194,25 +174,23 @@ public class AuthenticationRequestXml {
 
     /**
      * Gets the value of the userInformation property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the userInformation property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getUserInformation().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link UserInformation }
-     * 
-     * 
      */
     public List<UserInformation> getUserInformation() {
         if (userInformation == null) {
@@ -223,11 +201,9 @@ public class AuthenticationRequestXml {
 
     /**
      * Gets the value of the postbackUrl property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getPostbackUrl() {
         return postbackUrl;
@@ -235,11 +211,9 @@ public class AuthenticationRequestXml {
 
     /**
      * Sets the value of the postbackUrl property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setPostbackUrl(String value) {
         this.postbackUrl = value;
@@ -247,11 +221,9 @@ public class AuthenticationRequestXml {
 
     /**
      * Gets the value of the customData property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCustomData() {
         return customData;
@@ -259,11 +231,9 @@ public class AuthenticationRequestXml {
 
     /**
      * Sets the value of the customData property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCustomData(String value) {
         this.customData = value;
@@ -271,11 +241,9 @@ public class AuthenticationRequestXml {
 
     /**
      * Gets the value of the signature property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link SignatureType }
-     *     
+     *
+     * @return possible object is
+     * {@link SignatureType }
      */
     public SignatureType getSignature() {
         return signature;
@@ -283,11 +251,9 @@ public class AuthenticationRequestXml {
 
     /**
      * Sets the value of the signature property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link SignatureType }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link SignatureType }
      */
     public void setSignature(SignatureType value) {
         this.signature = value;
@@ -295,11 +261,9 @@ public class AuthenticationRequestXml {
 
     /**
      * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getId() {
         return id;
@@ -307,11 +271,9 @@ public class AuthenticationRequestXml {
 
     /**
      * Sets the value of the id property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setId(String value) {
         this.id = value;
