@@ -6,4 +6,4 @@ services:
     env_file:
       - .env
     ports:
-      - 8788:8080
+      - 8787:8080
