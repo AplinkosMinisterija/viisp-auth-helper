@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  evartai:
+    image: biip/evartai:4.00
+    build: .
+    restart: always
+    ports: 
+      - 8788:8080
