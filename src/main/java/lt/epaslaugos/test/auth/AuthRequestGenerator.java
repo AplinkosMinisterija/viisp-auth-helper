@@ -1,22 +1,26 @@
 package lt.epaslaugos.test.auth;
 
 import lt.atea.vaiisis.authentication.model.xml.AuthenticationAttribute;
+import lt.atea.vaiisis.authentication.model.xml.AuthenticationProviderXml;
 import lt.atea.vaiisis.authentication.model.xml.AuthenticationRequestXml;
 import lt.atea.vaiisis.authentication.model.xml.UserInformation;
-import lt.atea.vaiisis.authentication.model.xml.AuthenticationProviderXml;
-import lt.atea.vaiisis.authentication.model.xml.ServiceTargetXml;
 import org.apache.commons.lang.StringUtils;
 import org.w3c.dom.Document;
 
-import javax.xml.soap.*;
-
 /**
  * Generates example authenticationRequest XML element.
- *
  */
 public class AuthRequestGenerator extends BaseAuthRequestGenerator {
-	public static final String PID = System.getenv("VIISP_PID");
-	public static final String POSTBACK_URL = System.getenv("VIISP_POSTBACK_URL");
+    public static final String PID = System.getenv("VIISP_PID");
+    public static final String POSTBACK_URL = System.getenv("VIISP_POSTBACK_URL");
+
+    public static void main(String[] args) throws Exception {
+        String request = new AuthRequestGenerator().generateRequest("custom data");
+        System.out.println("Auth request XML, which goes directly into SOAP body (Note: whitespace is important!):\n");
+        System.out.println(StringUtils.substringAfter(request, "?>"));
+
+
+    }
 
     public String generateRequest(String customData) throws Exception {
         AuthenticationRequestXml request = new AuthenticationRequestXml();
@@ -48,13 +52,5 @@ public class AuthRequestGenerator extends BaseAuthRequestGenerator {
 
         String xml = getSignedXml(doc.getFirstChild(), "#" + request.getId());
         return xml;
-    }
-
-    public static void main(String[] args) throws Exception {
-        String request = new AuthRequestGenerator().generateRequest("custom data");
-        System.out.println("Auth request XML, which goes directly into SOAP body (Note: whitespace is important!):\n");
-        System.out.println(StringUtils.substringAfter(request, "?>"));
-
-        
     }
 }

@@ -8,25 +8,19 @@
 
 package lt.atea.vaiisis.authentication.model.xml;
 
+import jakarta.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.adapters.CollapsedStringAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlID;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -44,17 +38,15 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "authenticationProvider",
-    "authenticationAttribute",
-    "userInformation",
-    "customData",
-    "sourceData",
-    "signature"
+        "authenticationProvider",
+        "authenticationAttribute",
+        "userInformation",
+        "customData",
+        "sourceData",
+        "signature"
 })
 @XmlRootElement(name = "authenticationDataResponse", namespace = "http://www.epaslaugos.lt/services/authentication")
 public class AuthenticationDataResponseXml {
@@ -79,11 +71,9 @@ public class AuthenticationDataResponseXml {
 
     /**
      * Gets the value of the authenticationProvider property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AuthenticationProviderXml }
-     *     
+     *
+     * @return possible object is
+     * {@link AuthenticationProviderXml }
      */
     public AuthenticationProviderXml getAuthenticationProvider() {
         return authenticationProvider;
@@ -91,11 +81,9 @@ public class AuthenticationDataResponseXml {
 
     /**
      * Sets the value of the authenticationProvider property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AuthenticationProviderXml }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link AuthenticationProviderXml }
      */
     public void setAuthenticationProvider(AuthenticationProviderXml value) {
         this.authenticationProvider = value;
@@ -103,25 +91,23 @@ public class AuthenticationDataResponseXml {
 
     /**
      * Gets the value of the authenticationAttribute property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the authenticationAttribute property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getAuthenticationAttribute().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link AuthenticationAttributePair }
-     * 
-     * 
      */
     public List<AuthenticationAttributePair> getAuthenticationAttribute() {
         if (authenticationAttribute == null) {
@@ -132,25 +118,23 @@ public class AuthenticationDataResponseXml {
 
     /**
      * Gets the value of the userInformation property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the userInformation property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getUserInformation().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link UserInformationPair }
-     * 
-     * 
      */
     public List<UserInformationPair> getUserInformation() {
         if (userInformation == null) {
@@ -161,11 +145,9 @@ public class AuthenticationDataResponseXml {
 
     /**
      * Gets the value of the customData property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCustomData() {
         return customData;
@@ -173,11 +155,9 @@ public class AuthenticationDataResponseXml {
 
     /**
      * Sets the value of the customData property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCustomData(String value) {
         this.customData = value;
@@ -185,11 +165,9 @@ public class AuthenticationDataResponseXml {
 
     /**
      * Gets the value of the sourceData property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AuthenticationSourceData }
-     *     
+     *
+     * @return possible object is
+     * {@link AuthenticationSourceData }
      */
     public AuthenticationSourceData getSourceData() {
         return sourceData;
@@ -197,11 +175,9 @@ public class AuthenticationDataResponseXml {
 
     /**
      * Sets the value of the sourceData property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AuthenticationSourceData }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link AuthenticationSourceData }
      */
     public void setSourceData(AuthenticationSourceData value) {
         this.sourceData = value;
@@ -209,11 +185,9 @@ public class AuthenticationDataResponseXml {
 
     /**
      * Gets the value of the signature property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link SignatureType }
-     *     
+     *
+     * @return possible object is
+     * {@link SignatureType }
      */
     public SignatureType getSignature() {
         return signature;
@@ -221,11 +195,9 @@ public class AuthenticationDataResponseXml {
 
     /**
      * Sets the value of the signature property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link SignatureType }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link SignatureType }
      */
     public void setSignature(SignatureType value) {
         this.signature = value;
@@ -233,11 +205,9 @@ public class AuthenticationDataResponseXml {
 
     /**
      * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getId() {
         return id;
@@ -245,11 +215,9 @@ public class AuthenticationDataResponseXml {
 
     /**
      * Sets the value of the id property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setId(String value) {
         this.id = value;

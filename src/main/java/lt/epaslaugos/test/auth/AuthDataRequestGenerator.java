@@ -6,7 +6,6 @@ import org.w3c.dom.Document;
 
 /**
  * Generates example authenticationDataRequest XML element.
- *
  */
 public class AuthDataRequestGenerator extends BaseAuthRequestGenerator {
     public String generateRequest(String ticket) throws Exception {

@@ -4,7 +4,6 @@ import lt.atea.vaiisis.authentication.model.xml.AuthenticationResponseXml;
 
 /**
  * Extracts ticket info from XML.
- *
  */
 public class AuthResponseGenerator extends BaseAuthResponseGenerator {
 
@@ -14,6 +13,6 @@ public class AuthResponseGenerator extends BaseAuthResponseGenerator {
         AuthenticationResponseXml response = (AuthenticationResponseXml) unmarshal(dataResponse, decodeSoap(data));
 
         return response.getTicket();
-        
+
     }
 }

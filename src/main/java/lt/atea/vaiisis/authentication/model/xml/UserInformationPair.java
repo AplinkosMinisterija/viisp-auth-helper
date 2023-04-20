@@ -8,19 +8,16 @@
 
 package lt.atea.vaiisis.authentication.model.xml;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.*;
+
 import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
  * <p>Java class for userInformationPair complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="userInformationPair">
  *   &lt;complexContent>
@@ -44,13 +41,11 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "userInformationPair", namespace = "http://www.epaslaugos.lt/services/authentication", propOrder = {
-    "information",
-    "value"
+        "information",
+        "value"
 })
 public class UserInformationPair {
 
@@ -61,11 +56,9 @@ public class UserInformationPair {
 
     /**
      * Gets the value of the information property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link UserInformation }
-     *     
+     *
+     * @return possible object is
+     * {@link UserInformation }
      */
     public UserInformation getInformation() {
         return information;
@@ -73,11 +66,9 @@ public class UserInformationPair {
 
     /**
      * Sets the value of the information property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link UserInformation }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link UserInformation }
      */
     public void setInformation(UserInformation value) {
         this.information = value;
@@ -85,11 +76,9 @@ public class UserInformationPair {
 
     /**
      * Gets the value of the value property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link UserInformationPair.Value }
-     *     
+     *
+     * @return possible object is
+     * {@link UserInformationPair.Value }
      */
     public UserInformationPair.Value getValue() {
         return value;
@@ -97,11 +86,9 @@ public class UserInformationPair {
 
     /**
      * Sets the value of the value property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link UserInformationPair.Value }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link UserInformationPair.Value }
      */
     public void setValue(UserInformationPair.Value value) {
         this.value = value;
@@ -110,9 +97,9 @@ public class UserInformationPair {
 
     /**
      * <p>Java class for anonymous complex type.
-     * 
+     *
      * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
+     *
      * <pre>
      * &lt;complexType>
      *   &lt;complexContent>
@@ -125,13 +112,11 @@ public class UserInformationPair {
      *   &lt;/complexContent>
      * &lt;/complexType>
      * </pre>
-     * 
-     * 
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
-        "stringValue",
-        "dateValue"
+            "stringValue",
+            "dateValue"
     })
     public static class Value {
 
@@ -143,11 +128,9 @@ public class UserInformationPair {
 
         /**
          * Gets the value of the stringValue property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         *
+         * @return possible object is
+         * {@link String }
          */
         public String getStringValue() {
             return stringValue;
@@ -155,11 +138,9 @@ public class UserInformationPair {
 
         /**
          * Sets the value of the stringValue property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         *
+         * @param value allowed object is
+         *              {@link String }
          */
         public void setStringValue(String value) {
             this.stringValue = value;
@@ -167,11 +148,9 @@ public class UserInformationPair {
 
         /**
          * Gets the value of the dateValue property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link XMLGregorianCalendar }
-         *     
+         *
+         * @return possible object is
+         * {@link XMLGregorianCalendar }
          */
         public XMLGregorianCalendar getDateValue() {
             return dateValue;
@@ -179,11 +158,9 @@ public class UserInformationPair {
 
         /**
          * Sets the value of the dateValue property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link XMLGregorianCalendar }
-         *     
+         *
+         * @param value allowed object is
+         *              {@link XMLGregorianCalendar }
          */
         public void setDateValue(XMLGregorianCalendar value) {
             this.dateValue = value;
