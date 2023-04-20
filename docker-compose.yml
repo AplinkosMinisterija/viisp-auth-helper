@@ -1,8 +1,9 @@
 version: "3.9"
 services:
-  evartai:
-    image: biip/evartai:4.00
-    build: .
+  viisp-auth-helper:
+    image: ghcr.io/aplinkosministerija/viisp-auth-helper:latest
     restart: always
-    ports: 
+    env_file:
+      - .env
+    ports:
       - 8788:8080
