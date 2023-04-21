@@ -61,6 +61,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build & push Docker image
+        id: docker_image
         uses: docker/build-push-action@v4
         with:
           context: .
@@ -69,3 +70,6 @@ jobs:
           push: true
           cache-from: type=gha,scope=${{ github.workflow }}
           cache-to: type=gha,mode=max,scope=${{ github.workflow }}
+
+      - name: Docker image version
+        run: echo ${{ steps.docker_image.outputs.imageid }}
