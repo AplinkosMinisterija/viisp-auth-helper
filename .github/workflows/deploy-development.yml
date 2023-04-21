@@ -47,6 +47,7 @@ jobs:
           images: |
             "ghcr.io/aplinkosministerija/viisp-auth-helper-development"
           tags: |
+            latest
             type=ref,event=branch
             type=ref,event=pr
             type=sha
