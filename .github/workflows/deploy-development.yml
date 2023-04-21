@@ -42,15 +42,15 @@ jobs:
             ${{ runner.os }}-buildx-
 
       - name: Docker meta
+        id: meta
         uses: docker/metadata-action@v4
         with:
           images: |
-            "ghcr.io/aplinkosministerija/viisp-auth-helper-development"
-          tags: |
-            latest
-            type=ref,event=branch
-            type=ref,event=pr
-            type=sha
+            aplinkosministerija/viisp-auth-helper
+            ghcr.io/aplinkosministerija/viisp-auth-helper
+          flavor: |
+            latest=false
+            prefix=development
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
