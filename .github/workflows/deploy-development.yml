@@ -1,9 +1,6 @@
 name: Deploy to Development
 
 on:
-  push:
-    branches:
-      - deploy-development
   workflow_dispatch:
     inputs:
       sha:
