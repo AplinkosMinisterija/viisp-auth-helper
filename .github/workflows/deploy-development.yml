@@ -1,0 +1,73 @@
+name: Deploy to Development
+
+on:
+  workflow_dispatch:
+    inputs:
+      sha:
+        description: 'Git SHA to Deploy (optional)'
+        required: false
+
+concurrency:
+  group: ci-deploy-development
+  cancel-in-progress: true
+
+jobs:
+  deploy_development:
+    name: Deploy to Development
+    runs-on: ubuntu-latest
+    environment: Development
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.sha }}
+          fetch-depth: 0
+
+      - name: Setup buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Cache docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ghcr.io/aplinkosministerija/viisp-auth-helper
+          tags: |
+            type=raw,value=development
+            type=ref,event=branch,suffix=-{{ sha }}
+          flavor: |
+            latest=false
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build & push Docker image
+        id: docker_image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          platforms: linux/amd64,linux/arm64 # support the new mac architecture
+          push: true
+          cache-from: type=gha,scope=${{ github.workflow }}
+          cache-to: type=gha,mode=max,scope=${{ github.workflow }}
+
+      - name: Docker image version
+        run: echo ${{ steps.docker_image.outputs.imageid }}
