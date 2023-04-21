@@ -46,10 +46,9 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            aplinkosministerija/viisp-auth-helper
             ghcr.io/aplinkosministerija/viisp-auth-helper
           flavor: |
-            latest=false
+            latest=true
             prefix=
             suffix=
 
