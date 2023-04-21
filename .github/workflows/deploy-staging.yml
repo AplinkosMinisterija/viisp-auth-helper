@@ -68,3 +68,23 @@ jobs:
 
       - name: Docker image version
         run: echo ${{ steps.docker_image.outputs.imageid }}
+
+      - name: Create Release Tag
+        id: create-release-tag
+        # left pads the run number with zeros to a length of 4; better alphabetical order
+        run: echo "tag_name=r-$(printf %04d $GITHUB_RUN_NUMBER)" >> $GITHUB_OUTPUT
+      - name: Create Draft Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.create-release-tag.outputs.tag_name }}
+          name: Release ${{ steps.create-release-tag.outputs.tag_name }}
+          generate_release_notes: true
+          body: |
+            ## Info
+            Commit ${{ github.sha }} was deployed to `staging`. [See code diff](${{ github.event.compare }}).
+
+            It was initialized by [${{ github.event.sender.login }}](${{ github.event.sender.html_url }}).
+
+            ## How to Promote?
+            In order to promote this to prod, edit the draft and press **"Publish release"**.
+          draft: true
