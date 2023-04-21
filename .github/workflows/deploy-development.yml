@@ -49,7 +49,7 @@ jobs:
             ghcr.io/aplinkosministerija/viisp-auth-helper
           flavor: |
             latest=true
-            prefix=
+            prefix=-dev
             suffix=
 
       - name: Login to GitHub Container Registry
