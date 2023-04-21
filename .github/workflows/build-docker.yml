@@ -32,8 +32,8 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            "ghcr.io/AplinkosMinisterija/viisp-auth-helper"
-          tags: latest
+            aplinkosministerija/viisp-auth-helper
+            ghcr.io/aplinkosministerija/viisp-auth-helper
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
