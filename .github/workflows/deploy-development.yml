@@ -50,7 +50,6 @@ jobs:
           tags: |
             type=raw,value=development
             type=ref,event=branch,suffix=-{{ sha }}
-            type=ref,event=pr
           flavor: |
             latest=false
 
@@ -69,5 +68,5 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64
           push: true
-          cache-from: type=gha, scope=${{ github.workflow }}
-          cache-to: type=gha, scope=${{ github.workflow }}
+          cache-from: type=gha,scope=${{ github.workflow }}
+          cache-to: type=gha,mode=max,scope=${{ github.workflow }}
