@@ -47,10 +47,12 @@ jobs:
         with:
           images: |
             ghcr.io/aplinkosministerija/viisp-auth-helper
-          flavor: |
-            latest=true
-            prefix=-dev
-            suffix=
+          tags: |
+            type=raw,value=development
+            type=schedule
+            type=ref,event=branch
+            type=ref,event=tag
+            type=ref,event=pr
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
