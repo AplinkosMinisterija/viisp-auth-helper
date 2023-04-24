@@ -9,7 +9,7 @@ import java.util.Map;
  * Extracts user info from XML.
  */
 public class AuthDataResponseGenerator extends BaseAuthResponseGenerator {
-    public Map generateResponse(String data) throws Exception {
+    public Map<String, String> generateResponse(String data) throws Exception {
         AuthenticationDataResponseXml dataResponse = new AuthenticationDataResponseXml();
         AuthenticationDataResponseXml response = (AuthenticationDataResponseXml) unmarshal(dataResponse, decodeSoap(data));
 

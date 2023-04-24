@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class TicketInfoControler {
     @GetMapping
     public ResponseEntity<String> generateSoap(@RequestParam String ticketId) {
-
-        String request = null;
         try {
             AuthDataRequestGenerator dataRequest = new AuthDataRequestGenerator();
             String body = dataRequest.generateSoap(dataRequest.generateRequest(ticketId));

@@ -50,7 +50,6 @@ public class AuthRequestGenerator extends BaseAuthRequestGenerator {
         Document doc = (Document) marshal(request);
         setIdAttribute(doc.getChildNodes().item(0));
 
-        String xml = getSignedXml(doc.getFirstChild(), "#" + request.getId());
-        return xml;
+        return getSignedXml(doc.getFirstChild(), "#" + request.getId());
     }
 }
