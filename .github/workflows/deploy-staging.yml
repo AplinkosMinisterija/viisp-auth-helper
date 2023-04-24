@@ -1,13 +1,10 @@
-name: Deploy to Development
+name: Deploy to Staging
 
 on:
-  workflow_dispatch:
-    inputs:
-      git-ref:
-        description: Git Ref (Optional)
-        required: false
+  push:
+    branches: [ main ]
 
-concurrency: deploy-to-development
+concurrency: deploy-to-staging
 
 jobs:
   docker-build-push:
@@ -15,6 +12,5 @@ jobs:
     uses: AplinkosMinisterija/reusable-workflows/.github/workflows/docker-build-push.yml@main
     with:
       docker-image: ghcr.io/aplinkosministerija/viisp-auth-helper
-      environment: development
+      environment: staging
       runs-on: ubuntu-latest
-      git-ref: ${{ github.event.inputs.git-ref }}
