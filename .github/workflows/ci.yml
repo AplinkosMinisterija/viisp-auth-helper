@@ -19,3 +19,12 @@ jobs:
           cache: maven
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots verify
+
+  test-docker-build:
+    name: Test building docker image
+    uses: AplinkosMinisterija/reusable-workflows/.github/workflows/docker-build-push.yml@main
+    with:
+      docker-image: ghcr.io/aplinkosministerija/test
+      environment: test
+      runs-on: ubuntu-latest
+      push: false
