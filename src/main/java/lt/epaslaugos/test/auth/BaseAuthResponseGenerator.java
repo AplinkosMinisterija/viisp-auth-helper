@@ -17,12 +17,10 @@ public abstract class BaseAuthResponseGenerator {
         JAXBContext jc = JAXBContext.newInstance(packageName);
         Unmarshaller unmarshaller = jc.createUnmarshaller();
 
-        Unmarshaller u = jc.createUnmarshaller();
-        StringBuffer xmlStr = new StringBuffer(file);
-        return unmarshaller.unmarshal(new StreamSource(new StringReader(xmlStr.toString())));
+        return unmarshaller.unmarshal(new StreamSource(new StringReader(file)));
     }
 
-    public String decodeSoap(String data) throws Exception {
+    public String decodeSoap(String data) {
         Pattern pattern = Pattern.compile("<soap:Body>(.*)</soap:Body>");
         Matcher matcher = pattern.matcher(data);
         if (matcher.find()) {

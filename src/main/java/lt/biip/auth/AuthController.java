@@ -40,7 +40,7 @@ public class AuthController {
 
         BufferedReader in = new BufferedReader(new InputStreamReader(http.getInputStream()));
         String inputLine;
-        StringBuffer content = new StringBuffer();
+        StringBuilder content = new StringBuilder();
         while ((inputLine = in.readLine()) != null) {
             content.append(inputLine);
         }
@@ -62,7 +62,7 @@ public class AuthController {
             String ticket = dataResponse.generateResponse(soap);
             String epaslaugosHost = "https://www.epaslaugos.lt/portal/external/services/authentication/v2/";
 
-            Map<String, String> result = new HashMap();
+            Map<String, String> result = new HashMap<>();
             result.put("ticket", ticket);
             result.put("host", epaslaugosHost);
             result.put("url", String.format("%s?ticket=%s", epaslaugosHost, ticket));

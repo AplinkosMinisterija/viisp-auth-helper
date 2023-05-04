@@ -22,7 +22,6 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyStore;
 import java.security.PrivateKey;
@@ -83,10 +82,10 @@ public abstract class BaseAuthRequestGenerator {
         DOMSignContext dsc = new DOMSignContext(privateKey, node);
         XMLSignatureFactory fac = XML_SIGNATURE_FACTORY;
 
-        List<String> prefixList = new ArrayList<String>();
+        List<String> prefixList = new ArrayList<>();
         prefixList.add(node.getPrefix());
         C14NMethodParameterSpec spec = new ExcC14NParameterSpec(prefixList);
-        List<Transform> transforms = new ArrayList<Transform>();
+        List<Transform> transforms = new ArrayList<>();
         transforms.add(fac.newTransform(CanonicalizationMethod.ENVELOPED, (TransformParameterSpec) null));
         transforms.add(fac.newTransform(CanonicalizationMethod.EXCLUSIVE, spec));
 
@@ -118,7 +117,7 @@ public abstract class BaseAuthRequestGenerator {
         }
     }
 
-    public String generateSoap(String data) throws Exception {
+    public String generateSoap(String data) {
         return "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" \n" +
                 "xmlns:aut=\"http://www.epaslaugos.lt/services/authentication\" \n" +
                 "xmlns:xd=\"http://www.w3.org/2000/09/xmldsig#\"> \n" +
