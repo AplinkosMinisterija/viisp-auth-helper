@@ -16,3 +16,4 @@ jobs:
       environment: production
       runs-on: ubuntu-latest
       latest-tag: true
+      push: true

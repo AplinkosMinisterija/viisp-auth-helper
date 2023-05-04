@@ -18,3 +18,4 @@ jobs:
       environment: development
       runs-on: ubuntu-latest
       git-ref: ${{ github.event.inputs.git-ref }}
+      push: true
