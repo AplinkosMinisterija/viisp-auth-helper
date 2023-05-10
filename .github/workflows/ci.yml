@@ -18,7 +18,7 @@ jobs:
           distribution: temurin
           cache: maven
       - name: Build with Maven
-        run: mvn --batch-mode --update-snapshots verify
+        run: mvn --batch-mode --update-snapshots --fail-at-end verify
 
   test-docker-build:
     name: Test building docker image
