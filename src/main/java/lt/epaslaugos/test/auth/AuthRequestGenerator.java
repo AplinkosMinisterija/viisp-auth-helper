@@ -4,7 +4,6 @@ import lt.atea.vaiisis.authentication.model.xml.AuthenticationAttribute;
 import lt.atea.vaiisis.authentication.model.xml.AuthenticationProviderXml;
 import lt.atea.vaiisis.authentication.model.xml.AuthenticationRequestXml;
 import lt.atea.vaiisis.authentication.model.xml.UserInformation;
-import org.apache.commons.lang.StringUtils;
 import org.w3c.dom.Document;
 
 /**
@@ -14,13 +13,7 @@ public class AuthRequestGenerator extends BaseAuthRequestGenerator {
     public static final String PID = System.getenv("VIISP_PID");
     public static final String POSTBACK_URL = System.getenv("VIISP_POSTBACK_URL");
 
-    public static void main(String[] args) throws Exception {
-        String request = new AuthRequestGenerator().generateRequest("custom data");
-        System.out.println("Auth request XML, which goes directly into SOAP body (Note: whitespace is important!):\n");
-        System.out.println(StringUtils.substringAfter(request, "?>"));
-
-
-    }
+    public static void main(String[] args) throws Exception {}
 
     public String generateRequest(String customData) throws Exception {
         AuthenticationRequestXml request = new AuthenticationRequestXml();
