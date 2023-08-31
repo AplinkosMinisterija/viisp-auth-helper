@@ -20,8 +20,6 @@ public class AuthDataRequestGenerator extends BaseAuthRequestGenerator {
 
         String xml = getSignedXml(doc.getFirstChild(), "#" + dataRequest.getId());
 
-        System.out.println("Auth data request XML, which goes directly into SOAP body (Note: whitespace is important!):\n");
-        System.out.println(StringUtils.substringAfter(xml, "?>"));
         return xml;
     }
 }
