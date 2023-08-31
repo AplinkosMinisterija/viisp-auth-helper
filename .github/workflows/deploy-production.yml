@@ -11,6 +11,10 @@ jobs:
   docker-build-push:
     name: Build & push docker image
     uses: AplinkosMinisterija/reusable-workflows/.github/workflows/docker-build-push.yml@main
+    secrets: inherit
+    permissions:
+      contents: read
+      packages: write
     with:
       docker-image: ghcr.io/aplinkosministerija/viisp-auth-helper
       environment: production
