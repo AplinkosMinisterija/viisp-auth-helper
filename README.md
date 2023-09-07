@@ -14,19 +14,19 @@ VIISP (https://epaslaugos.lt).
 
 ## Endpoints
 
-| Endpoint | Description | Params | Info | Returns |
-| --- | --- | --- | --- | --- |
-| POST `/auth/sign`| Generates new ticket | `host` (required) <br> optionally - pass any data and it will be returned in `customData` afterwards | `host` param needed for `login.biip.lt` to redirect signed in user | JSON that contains:<br> 1. `ticket` - generated ticket ID.<br> 2. `host` - epaslaugos url <br> 3. `url` - concatinated url to redirect user
-| GET `/auth/data?ticket=...`| Gets signed in user/company data. Valid to call after successful sign in. | `ticket` (required) | `ticket` has to be previously generated ticket ID. | All avilable data such as `firstName`, `lastName`, `lt-personal-code`, etc as JSON.
+| Endpoint                    | Description                                                               | Params                                                                                               | Info                                                               | Returns                                                                                                                                     |
+| --------------------------- | ------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| POST `/auth/sign`           | Generates new ticket                                                      | `host` (required) <br> optionally - pass any data and it will be returned in `customData` afterwards | `host` param needed for `login.biip.lt` to redirect signed in user | JSON that contains:<br> 1. `ticket` - generated ticket ID.<br> 2. `host` - epaslaugos url <br> 3. `url` - concatinated url to redirect user |
+| GET `/auth/data?ticket=...` | Gets signed in user/company data. Valid to call after successful sign in. | `ticket` (required)                                                                                  | `ticket` has to be previously generated ticket ID.                 | All avilable data such as `firstName`, `lastName`, `lt-personal-code`, etc as JSON.                                                         |
 
 ## Environment variables
 
-| Variable name | Description                                      |
-|---------------|--------------------------------------------------|
-| `VIISP_PID`     | VIISP unique service ID, e.g. `VSID000000006110` |
-| `VIISP_POSTBACK_URL` | VIISP postback URL, e.g. `https://login.biip.lt/` |                        
-| `KEYSTORE_BASE64` | JKS keystore encoded as base64 |
-| `KEYSTORE_PASSWORD` | JKS keystore password |
+| Variable name        | Description                                       |
+| -------------------- | ------------------------------------------------- |
+| `VIISP_PID`          | VIISP unique service ID, e.g. `VSID000000006110`  |
+| `VIISP_POSTBACK_URL` | VIISP postback URL, e.g. `https://login.biip.lt/` |
+| `KEYSTORE_BASE64`    | JKS keystore encoded as base64                    |
+| `KEYSTORE_PASSWORD`  | JKS keystore password                             |
 
 ### **Keep in mind:**
 
@@ -35,10 +35,9 @@ VIISP (https://epaslaugos.lt).
 1. Create a form that redirects user to sign in. In example bellow - underscored variables are results from the request.
 
 ```html
-
 <form method="POST" action="_host_">
-    <input type="hidden" value="_ticket_" name="ticket">
-    <button type="submit">Sign In</button>
+  <input type="hidden" value="_ticket_" name="ticket" />
+  <button type="submit">Sign In</button>
 </form>
 ```
 
