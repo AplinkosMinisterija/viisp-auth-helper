@@ -39,6 +39,11 @@ public class AuthRequestGenerator extends BaseAuthRequestGenerator {
         request.getUserInformation().add(UserInformation.EMAIL);
         request.getUserInformation().add(UserInformation.PHONE_NUMBER);
         request.getUserInformation().add(UserInformation.COMPANY_NAME);
+        request.getUserInformation().add(UserInformation.ADDRESS);
+        request.getUserInformation().add(UserInformation.BIRTHDAY);
+        request.getUserInformation().add(UserInformation.NATIONALITY);
+        request.getUserInformation().add(UserInformation.PROXY_TYPE);
+        request.getUserInformation().add(UserInformation.PROXY_SOURCE);
 
         Document doc = (Document) marshal(request);
         setIdAttribute(doc.getChildNodes().item(0));

@@ -52,7 +52,13 @@ public enum UserInformation {
     @XmlEnumValue("birthday")
     BIRTHDAY("birthday"),
     @XmlEnumValue("companyName")
-    COMPANY_NAME("companyName");
+    COMPANY_NAME("companyName"),
+    @XmlEnumValue("nationality")
+    NATIONALITY("nationality"),
+    @XmlEnumValue("proxyType")
+    PROXY_TYPE("proxyType"),
+    @XmlEnumValue("proxySource")
+    PROXY_SOURCE("proxySource");
     private final String value;
 
     UserInformation(String v) {
