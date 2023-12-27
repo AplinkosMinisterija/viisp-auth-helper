@@ -22,7 +22,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.nio.charset.StandardCharsets;
+import java.nio.charset.Charset;
 import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -75,17 +75,17 @@ public abstract class BaseAuthRequestGenerator {
         final ByteArrayOutputStream output = new ByteArrayOutputStream();
         trans.transform(new DOMSource(node), new StreamResult(output));
 
-        return output.toString(StandardCharsets.UTF_8);
+        return new String(output.toByteArray(), Charset.forName("UTF-8"));
     }
 
     public void signNode(Node node, String uri) throws Exception {
         DOMSignContext dsc = new DOMSignContext(privateKey, node);
         XMLSignatureFactory fac = XML_SIGNATURE_FACTORY;
 
-        List<String> prefixList = new ArrayList<>();
+        List<String> prefixList = new ArrayList<String>();
         prefixList.add(node.getPrefix());
         C14NMethodParameterSpec spec = new ExcC14NParameterSpec(prefixList);
-        List<Transform> transforms = new ArrayList<>();
+        List<Transform> transforms = new ArrayList<Transform>();
         transforms.add(fac.newTransform(CanonicalizationMethod.ENVELOPED, (TransformParameterSpec) null));
         transforms.add(fac.newTransform(CanonicalizationMethod.EXCLUSIVE, spec));
 

@@ -2,6 +2,7 @@ version: "3.9"
 services:
   viisp-auth-helper:
     image: ghcr.io/aplinkosministerija/viisp-auth-helper:latest
+    platform: linux/amd64
     restart: always
     env_file:
       - .env
