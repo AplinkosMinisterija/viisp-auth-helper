@@ -1,4 +1,4 @@
-package lt.epaslaugos.test.auth;
+package lt.biip.auth.generators;
 
 import lt.epaslaugos.authentication.client.AuthenticationDataResponse;
 

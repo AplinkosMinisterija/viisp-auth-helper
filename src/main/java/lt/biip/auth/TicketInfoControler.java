@@ -1,6 +1,6 @@
 package lt.biip.auth;
 
-import lt.epaslaugos.test.auth.AuthDataRequestGenerator;
+import lt.biip.auth.generators.AuthDataRequestGenerator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

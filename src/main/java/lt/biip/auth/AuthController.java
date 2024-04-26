@@ -1,9 +1,9 @@
 package lt.biip.auth;
 
-import lt.epaslaugos.test.auth.AuthDataRequestGenerator;
-import lt.epaslaugos.test.auth.AuthDataResponseGenerator;
-import lt.epaslaugos.test.auth.AuthRequestGenerator;
-import lt.epaslaugos.test.auth.AuthResponseGenerator;
+import lt.biip.auth.generators.AuthDataRequestGenerator;
+import lt.biip.auth.generators.AuthDataResponseGenerator;
+import lt.biip.auth.generators.AuthRequestGenerator;
+import lt.biip.auth.generators.AuthResponseGenerator;
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

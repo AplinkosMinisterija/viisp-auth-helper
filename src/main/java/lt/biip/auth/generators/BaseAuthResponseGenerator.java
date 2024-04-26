@@ -1,4 +1,4 @@
-package lt.epaslaugos.test.auth;
+package lt.biip.auth.generators;
 
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
@@ -9,8 +9,7 @@ import java.io.StringReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@SuppressWarnings("restriction")
-public abstract class BaseAuthResponseGenerator {
+abstract class BaseAuthResponseGenerator {
 
     public Object unmarshal(Object data, String file) throws JAXBException {
         String packageName = data.getClass().getPackage().getName();
