@@ -1,9 +1,9 @@
 package lt.epaslaugos.test.auth;
 
-import lt.atea.vaiisis.authentication.model.xml.AuthenticationAttribute;
-import lt.atea.vaiisis.authentication.model.xml.AuthenticationProviderXml;
-import lt.atea.vaiisis.authentication.model.xml.AuthenticationRequestXml;
-import lt.atea.vaiisis.authentication.model.xml.UserInformation;
+import lt.epaslaugos.authentication.client.AuthenticationAttribute;
+import lt.epaslaugos.authentication.client.AuthenticationProvider;
+import lt.epaslaugos.authentication.client.AuthenticationRequest;
+import lt.epaslaugos.authentication.client.UserInformation;
 import org.w3c.dom.Document;
 
 /**
@@ -16,7 +16,7 @@ public class AuthRequestGenerator extends BaseAuthRequestGenerator {
     public static void main(String[] args) throws Exception {}
 
     public String generateRequest(String customData) throws Exception {
-        AuthenticationRequestXml request = new AuthenticationRequestXml();
+        AuthenticationRequest request = new AuthenticationRequest();
         request.setId(SIGNED_NODE_ID);
 
         request.setPid(PID);
@@ -26,12 +26,10 @@ public class AuthRequestGenerator extends BaseAuthRequestGenerator {
         request.getAuthenticationAttribute().add(AuthenticationAttribute.LT_COMPANY_CODE);
         request.getAuthenticationAttribute().add(AuthenticationAttribute.EIDAS_EID);
 
-        request.getAuthenticationProvider().add(AuthenticationProviderXml.AUTH_PROVIDER_LT_IDENTITY_CARD);
-        request.getAuthenticationProvider().add(AuthenticationProviderXml.AUTH_PROVIDER_LT_BANK);
-        request.getAuthenticationProvider().add(AuthenticationProviderXml.AUTH_PROVIDER_SIGNATURE);
-        request.getAuthenticationProvider().add(AuthenticationProviderXml.AUTH_PROVIDER_LT_EMPLOYEE_CARD);
-        request.getAuthenticationProvider().add(AuthenticationProviderXml.AUTH_PROVIDER_STORK);
-        request.getAuthenticationProvider().add(AuthenticationProviderXml.AUTH_EIDAS);
+        request.getAuthenticationProvider().add(AuthenticationProvider.AUTH_LOGIN_PASS);
+        request.getAuthenticationProvider().add(AuthenticationProvider.AUTH_LT_IDENTITY_CARD);
+        request.getAuthenticationProvider().add(AuthenticationProvider.AUTH_LT_GOVERNMENT_EMPLOYEE_CARD);
+        request.getAuthenticationProvider().add(AuthenticationProvider.AUTH_LT_BANK);
 
         // request.setServiceTarget(ServiceTargetXml.SERVICE_TARGET_BUSINESS);
         request.getUserInformation().add(UserInformation.FIRST_NAME);

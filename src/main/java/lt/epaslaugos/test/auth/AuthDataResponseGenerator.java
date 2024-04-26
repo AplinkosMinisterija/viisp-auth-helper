@@ -1,6 +1,6 @@
 package lt.epaslaugos.test.auth;
 
-import lt.atea.vaiisis.authentication.model.xml.AuthenticationDataResponseXml;
+import lt.epaslaugos.authentication.client.AuthenticationDataResponse;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,8 +10,8 @@ import java.util.Map;
  */
 public class AuthDataResponseGenerator extends BaseAuthResponseGenerator {
     public Map<String, String> generateResponse(String data) throws Exception {
-        AuthenticationDataResponseXml dataResponse = new AuthenticationDataResponseXml();
-        AuthenticationDataResponseXml response = (AuthenticationDataResponseXml) unmarshal(dataResponse, decodeSoap(data));
+        AuthenticationDataResponse dataResponse = new AuthenticationDataResponse();
+        AuthenticationDataResponse response = (AuthenticationDataResponse) unmarshal(dataResponse, decodeSoap(data));
 
         Map<String, String> result = new HashMap<>();
 
