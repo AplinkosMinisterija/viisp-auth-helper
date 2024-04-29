@@ -1,4 +1,4 @@
-package lt.epaslaugos.test.auth;
+package lt.biip.auth.generators;
 
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;

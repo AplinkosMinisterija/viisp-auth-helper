@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WL5G3N0:definitions name="ExternalAuthenticationServiceImplService" targetNamespace="http://www.epaslaugos.lt/services/authenticationServiceProvider" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="http://www.epaslaugos.lt/services/authentication" xmlns:WL5G3N2="http://viisp.ivpk.lt/systemHealth" xmlns:WL5G3N3="http://www.epaslaugos.lt/services/authenticationServiceProvider" xmlns:WL5G3N4="http://schemas.xmlsoap.org/wsdl/soap/">
+    <WL5G3N0:types>
+        <xsd:schema elementFormDefault="qualified" targetNamespace="http://www.epaslaugos.lt/services/authentication" xmlns="http://www.epaslaugos.lt/services/authentication" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:ns1="http://www.epaslaugos.lt/services/authentication" xmlns:ns2="http://viisp.ivpk.lt/systemHealth" xmlns:ns3="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.epaslaugos.lt/services/authenticationServiceProvider" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.w3.org/2000/09/xmldsig#"/>
+            <xsd:import namespace="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+            <xsd:import namespace="http://viisp.ivpk.lt/systemHealth"/>
+            <xsd:element name="authenticationRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="pid" type="xs:string"/>
+                        <xsd:element minOccurs="0" name="serviceTarget" type="serviceTarget"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="authenticationProvider" type="authenticationProvider"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="authenticationAttribute" type="authenticationAttribute"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="userInformation" type="userInformation"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="proxyAuthenticationAttribute" type="authenticationAttribute"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="proxyUserInformation" type="userInformation"/>
+                        <xsd:element minOccurs="0" name="postbackUrl" type="xs:anyURI"/>
+                        <xsd:element minOccurs="0" name="customData" type="xs:string"/>
+                        <xsd:element ref="dsig:Signature"/>
+                    </xsd:sequence>
+                    <xsd:attribute name="id" type="xs:ID" use="optional"/>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="authenticationResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="ticket" type="ticket"/>
+                        <xsd:element ref="dsig:Signature"/>
+                    </xsd:sequence>
+                    <xsd:attribute name="id" type="xs:ID" use="optional"/>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="authenticationDataRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="pid" type="xs:string"/>
+                        <xsd:element name="ticket" type="ticket"/>
+                        <xsd:element minOccurs="0" name="includeSourceData" type="xs:boolean"/>
+                        <xsd:element ref="dsig:Signature"/>
+                    </xsd:sequence>
+                    <xsd:attribute name="id" type="xs:ID" use="optional"/>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="authenticationDataResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="authenticationProvider" type="authenticationProvider"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="authenticationAttribute" type="authenticationAttributePair"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="userInformation" type="userInformationPair"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="proxyAuthenticationAttribute" type="authenticationAttributePair"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="proxyUserInformation" type="userInformationPair"/>
+                        <xsd:element minOccurs="0" name="customData" type="xs:string"/>
+                        <xsd:element minOccurs="0" name="sourceData" type="authenticationSourceData"/>
+                        <xsd:element ref="dsig:Signature"/>
+                    </xsd:sequence>
+                    <xsd:attribute name="id" type="xs:ID" use="optional"/>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="invalidSignatureException"/>
+            <xsd:element name="invalidXmlException"/>
+            <xsd:complexType name="authenticationAttributePair">
+                <xsd:sequence>
+                    <xsd:element name="attribute" type="authenticationAttribute"/>
+                    <xsd:element name="value" type="xs:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="userInformationPair">
+                <xsd:sequence>
+                    <xsd:element name="information" type="userInformation"/>
+                    <xsd:element name="value">
+                        <xsd:complexType>
+                            <xsd:choice>
+                                <xsd:element name="stringValue" type="xs:string"/>
+                                <xsd:element name="dateValue" type="xs:date"/>
+                            </xsd:choice>
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:simpleType name="ticket">
+                <xsd:restriction base="xs:string">
+                    <xsd:maxLength value="512"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="serviceTarget">
+                <xsd:restriction base="xs:string">
+                    <xsd:enumeration value="citizen"/>
+                    <xsd:enumeration value="business"/>
+                    <xsd:enumeration value="provider"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="authenticationProvider">
+                <xsd:restriction base="xs:string">
+                    <xsd:enumeration value="auth.login.pass"/>
+                    <xsd:enumeration value="auth.lt.identity.card"/>
+                    <xsd:enumeration value="auth.lt.government.employee.card"/>
+                    <xsd:enumeration value="auth.lt.bank"/>
+                    <xsd:enumeration value="auth.stork">
+                        <xsd:annotation>
+                            <xsd:documentation>Reikšmė nebegaliojanti, palikta dėl išorinių sistemų palaikymo</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="auth.eidas"/>
+                    <xsd:enumeration value="auth.tsl.identity.card">
+                        <xsd:annotation>
+                            <xsd:documentation>Reikšmė nebegaliojanti, palikta dėl išorinių sistemų palaikymo</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="auth.signatureProvider"/>
+                    <xsd:enumeration value="auth.iltu.identity.card"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="authenticationAttribute">
+                <xsd:restriction base="xs:string">
+                    <xsd:enumeration value="lt-personal-code"/>
+                    <xsd:enumeration value="lt-company-code"/>
+                    <xsd:enumeration value="lt-government-employee-code"/>
+                    <xsd:enumeration value="stork-eid">
+                        <xsd:annotation>
+                            <xsd:documentation>Reikšmė nebegaliojanti, palikta dėl išorinių sistemų palaikymo</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="tsl-serial-number">
+                        <xsd:annotation>
+                            <xsd:documentation>Reikšmė nebegaliojanti, palikta dėl išorinių sistemų palaikymo</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="eidas-eid"/>
+                    <xsd:enumeration value="login"/>
+                    <xsd:enumeration value="iltu-personal-code"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="userInformation">
+                <xsd:restriction base="xs:string">
+                    <xsd:enumeration value="id"/>
+                    <xsd:enumeration value="firstName"/>
+                    <xsd:enumeration value="lastName"/>
+                    <xsd:enumeration value="address"/>
+                    <xsd:enumeration value="email"/>
+                    <xsd:enumeration value="phoneNumber"/>
+                    <xsd:enumeration value="birthday"/>
+                    <xsd:enumeration value="companyName"/>
+                    <xsd:enumeration value="nationality"/>
+                    <xsd:enumeration value="proxyType"/>
+                    <xsd:enumeration value="proxySource"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="proxyType">
+                <xsd:restriction base="xs:string">
+                    <xsd:enumeration value="generic"/>
+                    <xsd:enumeration value="service"/>
+                    <xsd:enumeration value="external"/>
+                    <xsd:enumeration value="legal"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="proxySource">
+                <xsd:restriction base="xs:string">
+                    <xsd:enumeration value="JAR"/>
+                    <xsd:enumeration value="GR"/>
+                    <xsd:enumeration value="NIRVAR"/>
+                    <xsd:enumeration value="AUTHORIZATION_REGISTER"/>
+                    <xsd:enumeration value="VIISP"/>
+                    <xsd:enumeration value="BANKLINK"/>
+                    <xsd:enumeration value="eIDAS"/>
+                    <xsd:enumeration value="USERNAME_PASSWORD"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:complexType name="authenticationSourceData">
+                <xsd:sequence>
+                    <xsd:element name="type" type="authenticationSourceType"/>
+                    <xsd:element maxOccurs="unbounded" name="parameter" type="authenticationSourceParameter"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:simpleType name="authenticationSourceType">
+                <xsd:restriction base="xs:string">
+                    <xsd:enumeration value="SAML"/>
+                    <xsd:enumeration value="BANKLINK"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:complexType name="authenticationSourceParameter">
+                <xsd:simpleContent>
+                    <xsd:extension base="xs:string">
+                        <xsd:attribute name="name" type="xs:string"/>
+                    </xsd:extension>
+                </xsd:simpleContent>
+            </xsd:complexType>
+        </xsd:schema>
+        <xsd:schema elementFormDefault="qualified" targetNamespace="http://www.w3.org/2000/09/xmldsig#" version="0.1" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:ns1="http://www.epaslaugos.lt/services/authentication" xmlns:ns2="http://viisp.ivpk.lt/systemHealth" xmlns:ns3="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.epaslaugos.lt/services/authenticationServiceProvider" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <!-- Basic Types Defined for Signatures -->
+            <xsd:simpleType name="CryptoBinary">
+                <xsd:restriction base="base64Binary">
+                </xsd:restriction>
+            </xsd:simpleType>
+            <!-- Start Signature -->
+            <xsd:element name="Signature" type="ds:SignatureType"/>
+            <xsd:complexType name="SignatureType">
+                <xsd:sequence>
+                    <xsd:element ref="ds:SignedInfo"/>
+                    <xsd:element ref="ds:SignatureValue"/>
+                    <xsd:element minOccurs="0" ref="ds:KeyInfo"/>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" ref="ds:Object"/>
+                </xsd:sequence>
+                <xsd:attribute name="Id" type="ID" use="optional"/>
+            </xsd:complexType>
+            <xsd:element name="SignatureValue" type="ds:SignatureValueType"/>
+            <xsd:complexType name="SignatureValueType">
+                <xsd:simpleContent>
+                    <xsd:extension base="base64Binary">
+                        <xsd:attribute name="Id" type="ID" use="optional"/>
+                    </xsd:extension>
+                </xsd:simpleContent>
+            </xsd:complexType>
+            <!-- Start SignedInfo -->
+            <xsd:element name="SignedInfo" type="ds:SignedInfoType"/>
+            <xsd:complexType name="SignedInfoType">
+                <xsd:sequence>
+                    <xsd:element ref="ds:CanonicalizationMethod"/>
+                    <xsd:element ref="ds:SignatureMethod"/>
+                    <xsd:element maxOccurs="unbounded" ref="ds:Reference"/>
+                </xsd:sequence>
+                <xsd:attribute name="Id" type="ID" use="optional"/>
+            </xsd:complexType>
+            <xsd:element name="CanonicalizationMethod" type="ds:CanonicalizationMethodType"/>
+            <xsd:complexType mixed="true" name="CanonicalizationMethodType">
+                <xsd:sequence>
+                    <xsd:any maxOccurs="unbounded" minOccurs="0" namespace="##any"/>
+                    <!-- (0,unbounded) elements from (1,1) namespace -->
+                </xsd:sequence>
+                <xsd:attribute name="Algorithm" type="anyURI" use="required"/>
+            </xsd:complexType>
+            <xsd:element name="SignatureMethod" type="ds:SignatureMethodType"/>
+            <xsd:complexType mixed="true" name="SignatureMethodType">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="HMACOutputLength" type="ds:HMACOutputLengthType"/>
+                    <xsd:any maxOccurs="unbounded" minOccurs="0" namespace="##other"/>
+                    <!-- (0,unbounded) elements from (1,1) external namespace -->
+                </xsd:sequence>
+                <xsd:attribute name="Algorithm" type="anyURI" use="required"/>
+            </xsd:complexType>
+            <!-- Start Reference -->
+            <xsd:element name="Reference" type="ds:ReferenceType"/>
+            <xsd:complexType name="ReferenceType">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" ref="ds:Transforms"/>
+                    <xsd:element ref="ds:DigestMethod"/>
+                    <xsd:element ref="ds:DigestValue"/>
+                </xsd:sequence>
+                <xsd:attribute name="Id" type="ID" use="optional"/>
+                <xsd:attribute name="URI" type="anyURI" use="optional"/>
+                <xsd:attribute name="Type" type="anyURI" use="optional"/>
+            </xsd:complexType>
+            <xsd:element name="Transforms" type="ds:TransformsType"/>
+            <xsd:complexType name="TransformsType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" ref="ds:Transform"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="Transform" type="ds:TransformType"/>
+            <xsd:complexType mixed="true" name="TransformType">
+                <xsd:choice maxOccurs="unbounded" minOccurs="0">
+                    <xsd:any namespace="##other" processContents="lax"/>
+                    <!-- (1,1) elements from (0,unbounded) namespaces -->
+                    <xsd:element name="XPath" type="string"/>
+                </xsd:choice>
+                <xsd:attribute name="Algorithm" type="anyURI" use="required"/>
+            </xsd:complexType>
+            <!-- End Reference -->
+            <xsd:element name="DigestMethod" type="ds:DigestMethodType"/>
+            <xsd:complexType mixed="true" name="DigestMethodType">
+                <xsd:sequence>
+                    <xsd:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+                </xsd:sequence>
+                <xsd:attribute name="Algorithm" type="anyURI" use="required"/>
+            </xsd:complexType>
+            <xsd:element name="DigestValue" type="ds:DigestValueType"/>
+            <xsd:simpleType name="DigestValueType">
+                <xsd:restriction base="base64Binary"/>
+            </xsd:simpleType>
+            <!-- End SignedInfo -->
+            <!-- Start KeyInfo -->
+            <xsd:element name="KeyInfo" type="ds:KeyInfoType"/>
+            <xsd:complexType mixed="true" name="KeyInfoType">
+                <xsd:choice maxOccurs="unbounded">
+                    <xsd:element ref="ds:KeyName"/>
+                    <xsd:element ref="ds:KeyValue"/>
+                    <xsd:element ref="ds:RetrievalMethod"/>
+                    <xsd:element ref="ds:X509Data"/>
+                    <xsd:element ref="ds:PGPData"/>
+                    <xsd:element ref="ds:SPKIData"/>
+                    <xsd:element ref="ds:MgmtData"/>
+                    <xsd:any namespace="##other" processContents="lax"/>
+                    <!-- (1,1) elements from (0,unbounded) namespaces -->
+                </xsd:choice>
+                <xsd:attribute name="Id" type="ID" use="optional"/>
+            </xsd:complexType>
+            <xsd:element name="KeyName" type="string"/>
+            <xsd:element name="MgmtData" type="string"/>
+            <xsd:element name="KeyValue" type="ds:KeyValueType"/>
+            <xsd:complexType mixed="true" name="KeyValueType">
+                <xsd:choice>
+                    <xsd:element ref="ds:DSAKeyValue"/>
+                    <xsd:element ref="ds:RSAKeyValue"/>
+                    <xsd:any namespace="##other" processContents="lax"/>
+                </xsd:choice>
+            </xsd:complexType>
+            <xsd:element name="RetrievalMethod" type="ds:RetrievalMethodType"/>
+            <xsd:complexType name="RetrievalMethodType">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" ref="ds:Transforms"/>
+                </xsd:sequence>
+                <xsd:attribute name="URI" type="anyURI"/>
+                <xsd:attribute name="Type" type="anyURI" use="optional"/>
+            </xsd:complexType>
+            <!-- Start X509Data -->
+            <xsd:element name="X509Data" type="ds:X509DataType"/>
+            <xsd:complexType name="X509DataType">
+                <xsd:sequence maxOccurs="unbounded">
+                    <xsd:choice>
+                        <xsd:element name="X509IssuerSerial" type="ds:X509IssuerSerialType"/>
+                        <xsd:element name="X509SKI" type="base64Binary"/>
+                        <xsd:element name="X509SubjectName" type="string"/>
+                        <xsd:element name="X509Certificate" type="base64Binary"/>
+                        <xsd:element name="X509CRL" type="base64Binary"/>
+                        <xsd:any namespace="##other" processContents="lax"/>
+                    </xsd:choice>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="X509IssuerSerialType">
+                <xsd:sequence>
+                    <xsd:element name="X509IssuerName" type="string"/>
+                    <xsd:element name="X509SerialNumber" type="integer"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <!-- End X509Data -->
+            <!-- Begin PGPData -->
+            <xsd:element name="PGPData" type="ds:PGPDataType"/>
+            <xsd:complexType name="PGPDataType">
+                <xsd:choice>
+                    <xsd:sequence>
+                        <xsd:element name="PGPKeyID" type="base64Binary"/>
+                        <xsd:element minOccurs="0" name="PGPKeyPacket" type="base64Binary"/>
+                        <xsd:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+                    </xsd:sequence>
+                    <xsd:sequence>
+                        <xsd:element name="PGPKeyPacket" type="base64Binary"/>
+                        <xsd:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+                    </xsd:sequence>
+                </xsd:choice>
+            </xsd:complexType>
+            <!-- End PGPData -->
+            <!-- Begin SPKIData -->
+            <xsd:element name="SPKIData" type="ds:SPKIDataType"/>
+            <xsd:complexType name="SPKIDataType">
+                <xsd:sequence maxOccurs="unbounded">
+                    <xsd:element name="SPKISexp" type="base64Binary"/>
+                    <xsd:any minOccurs="0" namespace="##other" processContents="lax"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <!-- End SPKIData -->
+            <!-- End KeyInfo -->
+            <!-- Start Object (Manifest, SignatureProperty) -->
+            <xsd:element name="Object" type="ds:ObjectType"/>
+            <xsd:complexType mixed="true" name="ObjectType">
+                <xsd:sequence maxOccurs="unbounded" minOccurs="0">
+                    <xsd:any namespace="##any" processContents="lax"/>
+                </xsd:sequence>
+                <xsd:attribute name="Id" type="ID" use="optional"/>
+                <xsd:attribute name="MimeType" type="string" use="optional"/>
+                <!-- add a grep facet -->
+                <xsd:attribute name="Encoding" type="anyURI" use="optional"/>
+            </xsd:complexType>
+            <xsd:element name="Manifest" type="ds:ManifestType"/>
+            <xsd:complexType name="ManifestType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" ref="ds:Reference"/>
+                </xsd:sequence>
+                <xsd:attribute name="Id" type="ID" use="optional"/>
+            </xsd:complexType>
+            <xsd:element name="SignatureProperties" type="ds:SignaturePropertiesType"/>
+            <xsd:complexType name="SignaturePropertiesType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" ref="ds:SignatureProperty"/>
+                </xsd:sequence>
+                <xsd:attribute name="Id" type="ID" use="optional"/>
+            </xsd:complexType>
+            <xsd:element name="SignatureProperty" type="ds:SignaturePropertyType"/>
+            <xsd:complexType mixed="true" name="SignaturePropertyType">
+                <xsd:choice maxOccurs="unbounded">
+                    <xsd:any namespace="##other" processContents="lax"/>
+                    <!-- (1,1) elements from (1,unbounded) namespaces -->
+                </xsd:choice>
+                <xsd:attribute name="Target" type="anyURI" use="required"/>
+                <xsd:attribute name="Id" type="ID" use="optional"/>
+            </xsd:complexType>
+            <!-- End Object (Manifest, SignatureProperty) -->
+            <!-- Start Algorithm Parameters -->
+            <xsd:simpleType name="HMACOutputLengthType">
+                <xsd:restriction base="integer"/>
+            </xsd:simpleType>
+            <!-- Start KeyValue Element-types -->
+            <xsd:element name="DSAKeyValue" type="ds:DSAKeyValueType"/>
+            <xsd:complexType name="DSAKeyValueType">
+                <xsd:sequence>
+                    <xsd:sequence minOccurs="0">
+                        <xsd:element name="P" type="ds:CryptoBinary"/>
+                        <xsd:element name="Q" type="ds:CryptoBinary"/>
+                    </xsd:sequence>
+                    <xsd:element minOccurs="0" name="G" type="ds:CryptoBinary"/>
+                    <xsd:element name="Y" type="ds:CryptoBinary"/>
+                    <xsd:element minOccurs="0" name="J" type="ds:CryptoBinary"/>
+                    <xsd:sequence minOccurs="0">
+                        <xsd:element name="Seed" type="ds:CryptoBinary"/>
+                        <xsd:element name="PgenCounter" type="ds:CryptoBinary"/>
+                    </xsd:sequence>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RSAKeyValue" type="ds:RSAKeyValueType"/>
+            <xsd:complexType name="RSAKeyValueType">
+                <xsd:sequence>
+                    <xsd:element name="Modulus" type="ds:CryptoBinary"/>
+                    <xsd:element name="Exponent" type="ds:CryptoBinary"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <!-- End KeyValue Element-types -->
+            <!-- End Signature -->
+        </xsd:schema>
+        <xsd:schema elementFormDefault="qualified" targetNamespace="http://www.w3.org/2001/10/xml-exc-c14n#" version="0.1" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ec="http://www.w3.org/2001/10/xml-exc-c14n#" xmlns:ns1="http://www.epaslaugos.lt/services/authentication" xmlns:ns2="http://viisp.ivpk.lt/systemHealth" xmlns:ns3="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.epaslaugos.lt/services/authenticationServiceProvider" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:element name="InclusiveNamespaces" type="ec:InclusiveNamespaces"/>
+            <xsd:complexType name="InclusiveNamespaces">
+                <xsd:attribute name="PrefixList" type="NMTOKENS"/>
+            </xsd:complexType>
+        </xsd:schema>
+        <xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://viisp.ivpk.lt/systemHealth" xmlns="http://viisp.ivpk.lt/systemHealth" xmlns:ns1="http://www.epaslaugos.lt/services/authentication" xmlns:ns2="http://viisp.ivpk.lt/systemHealth" xmlns:ns3="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.epaslaugos.lt/services/authenticationServiceProvider" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:complexType name="echoRequest">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="echo" type="xs:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="echoResponse">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="echo" type="xs:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="echo" nillable="true" type="echoRequest"/>
+            <xsd:element name="echoResponse" nillable="true" type="echoResponse"/>
+        </xsd:schema>
+    </WL5G3N0:types>
+    <WL5G3N0:message name="getAuthenticationDataResponse">
+        <WL5G3N0:part element="WL5G3N1:authenticationDataResponse" name="parameters"/>
+    </WL5G3N0:message>
+    <WL5G3N0:message name="echoRequestResponse">
+        <WL5G3N0:part element="WL5G3N2:echoResponse" name="echoResponse"/>
+    </WL5G3N0:message>
+    <WL5G3N0:message name="getAuthenticationData">
+        <WL5G3N0:part element="WL5G3N1:authenticationDataRequest" name="parameters"/>
+    </WL5G3N0:message>
+    <WL5G3N0:message name="InvalidXmlException">
+        <WL5G3N0:part element="WL5G3N1:invalidXmlException" name="InvalidXmlException"/>
+    </WL5G3N0:message>
+    <WL5G3N0:message name="InvalidSignatureException">
+        <WL5G3N0:part element="WL5G3N1:invalidSignatureException" name="InvalidSignatureException"/>
+    </WL5G3N0:message>
+    <WL5G3N0:message name="echoRequest">
+        <WL5G3N0:part element="WL5G3N2:echo" name="echo"/>
+    </WL5G3N0:message>
+    <WL5G3N0:message name="initAuthenticationResponse">
+        <WL5G3N0:part element="WL5G3N1:authenticationResponse" name="parameters"/>
+    </WL5G3N0:message>
+    <WL5G3N0:message name="initAuthentication">
+        <WL5G3N0:part element="WL5G3N1:authenticationRequest" name="parameters"/>
+    </WL5G3N0:message>
+    <WL5G3N0:portType name="AuthenticationService">
+        <WL5G3N0:operation name="getAuthenticationData">
+            <WL5G3N0:input message="WL5G3N3:getAuthenticationData" name="getAuthenticationData"/>
+            <WL5G3N0:output message="WL5G3N3:getAuthenticationDataResponse" name="getAuthenticationDataResponse"/>
+            <WL5G3N0:fault message="WL5G3N3:InvalidSignatureException" name="InvalidSignatureException"/>
+            <WL5G3N0:fault message="WL5G3N3:InvalidXmlException" name="InvalidXmlException"/>
+        </WL5G3N0:operation>
+        <WL5G3N0:operation name="initAuthentication">
+            <WL5G3N0:input message="WL5G3N3:initAuthentication" name="initAuthentication"/>
+            <WL5G3N0:output message="WL5G3N3:initAuthenticationResponse" name="initAuthenticationResponse"/>
+            <WL5G3N0:fault message="WL5G3N3:InvalidSignatureException" name="InvalidSignatureException"/>
+            <WL5G3N0:fault message="WL5G3N3:InvalidXmlException" name="InvalidXmlException"/>
+        </WL5G3N0:operation>
+        <WL5G3N0:operation name="echoRequest">
+            <WL5G3N0:input message="WL5G3N3:echoRequest" name="echoRequest"/>
+            <WL5G3N0:output message="WL5G3N3:echoRequestResponse" name="echoRequestResponse"/>
+        </WL5G3N0:operation>
+    </WL5G3N0:portType>
+    <WL5G3N0:binding name="ExternalAuthenticationServiceImplServiceSoapBinding" type="WL5G3N3:AuthenticationService">
+        <WL5G3N4:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <WL5G3N0:operation name="getAuthenticationData">
+            <WL5G3N4:operation soapAction="http://www.epaslaugos.lt/services/authenticationServiceProvider/getAuthenticationData" style="document"/>
+            <WL5G3N0:input name="getAuthenticationData">
+                <WL5G3N4:body use="literal"/>
+            </WL5G3N0:input>
+            <WL5G3N0:output name="getAuthenticationDataResponse">
+                <WL5G3N4:body use="literal"/>
+            </WL5G3N0:output>
+            <WL5G3N0:fault name="InvalidSignatureException">
+                <WL5G3N4:fault name="InvalidSignatureException" use="literal"/>
+            </WL5G3N0:fault>
+            <WL5G3N0:fault name="InvalidXmlException">
+                <WL5G3N4:fault name="InvalidXmlException" use="literal"/>
+            </WL5G3N0:fault>
+        </WL5G3N0:operation>
+        <WL5G3N0:operation name="initAuthentication">
+            <WL5G3N4:operation soapAction="http://www.epaslaugos.lt/services/authenticationServiceProvider/initAuthentication" style="document"/>
+            <WL5G3N0:input name="initAuthentication">
+                <WL5G3N4:body use="literal"/>
+            </WL5G3N0:input>
+            <WL5G3N0:output name="initAuthenticationResponse">
+                <WL5G3N4:body use="literal"/>
+            </WL5G3N0:output>
+            <WL5G3N0:fault name="InvalidSignatureException">
+                <WL5G3N4:fault name="InvalidSignatureException" use="literal"/>
+            </WL5G3N0:fault>
+            <WL5G3N0:fault name="InvalidXmlException">
+                <WL5G3N4:fault name="InvalidXmlException" use="literal"/>
+            </WL5G3N0:fault>
+        </WL5G3N0:operation>
+        <WL5G3N0:operation name="echoRequest">
+            <WL5G3N4:operation soapAction="getEcho" style="document"/>
+            <WL5G3N0:input name="echoRequest">
+                <WL5G3N4:body use="literal"/>
+            </WL5G3N0:input>
+            <WL5G3N0:output name="echoRequestResponse">
+                <WL5G3N4:body use="literal"/>
+            </WL5G3N0:output>
+        </WL5G3N0:operation>
+    </WL5G3N0:binding>
+    <WL5G3N0:service name="ExternalAuthenticationServiceImplService">
+        <WL5G3N0:port binding="WL5G3N3:ExternalAuthenticationServiceImplServiceSoapBinding" name="ExternalAuthenticationServiceImplPort">
+            <WL5G3N4:address location="http://www.epaslaugos.lt:80/portal/authenticationServices/auth"/>
+        </WL5G3N0:port>
+    </WL5G3N0:service>
+</WL5G3N0:definitions>
