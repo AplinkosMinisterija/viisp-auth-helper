@@ -1,13 +1,13 @@
 package lt.biip.auth;
 
+import lt.biip.auth.dto.GenerateTicketResponse;
+import lt.biip.auth.dto.UserDataResponse;
 import lt.biip.auth.generators.AuthDataRequestGenerator;
 import lt.biip.auth.generators.AuthDataResponseGenerator;
 import lt.biip.auth.generators.AuthRequestGenerator;
 import lt.biip.auth.generators.AuthResponseGenerator;
-import org.json.JSONObject;
-import org.springframework.http.HttpStatus;
+import lt.epaslaugos.authentication.client.AuthenticationDataResponse;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.BufferedReader;
@@ -16,8 +16,6 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -52,46 +50,28 @@ public class AuthController {
     }
 
     @PostMapping(path = "/sign", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> generateTicket(@RequestBody String customData) {
-        try {
-            AuthRequestGenerator dataRequest = new AuthRequestGenerator();
-            String body = dataRequest.generateSoap(dataRequest.generateRequest(customData));
-            String soap = _sendSoapToEpaslaugos(body);
+    public GenerateTicketResponse generateTicket(@RequestBody String customData) throws Exception {
+        AuthRequestGenerator dataRequest = new AuthRequestGenerator();
+        String body = dataRequest.generateSoap(dataRequest.generateRequest(customData));
+        String soap = _sendSoapToEpaslaugos(body);
 
-            AuthResponseGenerator dataResponse = new AuthResponseGenerator();
-            String ticket = dataResponse.generateResponse(soap);
-            String epaslaugosHost = "https://www.epaslaugos.lt/portal/external/services/authentication/v2/";
+        AuthResponseGenerator dataResponse = new AuthResponseGenerator();
+        String ticket = dataResponse.generateResponse(soap);
+        String epaslaugosHost = "https://www.epaslaugos.lt/portal/external/services/authentication/v2/";
+        var url = String.format("%s?ticket=%s", epaslaugosHost, ticket);
 
-            Map<String, String> result = new HashMap<>();
-            result.put("ticket", ticket);
-            result.put("host", epaslaugosHost);
-            result.put("url", String.format("%s?ticket=%s", epaslaugosHost, ticket));
-            JSONObject json = new JSONObject(result);
-
-            return new ResponseEntity<>(json.toString(), HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
+        return new GenerateTicketResponse(ticket, epaslaugosHost, url);
     }
 
     @GetMapping(path = "/data", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getAuthData(@RequestParam String ticket) {
-        try {
-            AuthDataRequestGenerator dataRequest = new AuthDataRequestGenerator();
-            String body = dataRequest.generateSoap(dataRequest.generateRequest(ticket));
-            String soap = _sendSoapToEpaslaugos(body);
+    public UserDataResponse getAuthData(@RequestParam String ticket) throws Exception {
+        AuthDataRequestGenerator dataRequest = new AuthDataRequestGenerator();
+        String body = dataRequest.generateSoap(dataRequest.generateRequest(ticket));
+        String soap = _sendSoapToEpaslaugos(body);
 
-            AuthDataResponseGenerator dataResponse = new AuthDataResponseGenerator();
-            Map<String, String> userData = dataResponse.generateResponse(soap);
+        AuthDataResponseGenerator dataResponse = new AuthDataResponseGenerator();
 
-            JSONObject json = new JSONObject(userData);
-
-            return new ResponseEntity<>(json.toString(), HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
+        return dataResponse.generateResponse(soap);
     }
 }
 

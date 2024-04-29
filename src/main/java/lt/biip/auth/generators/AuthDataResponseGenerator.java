@@ -1,32 +1,45 @@
 package lt.biip.auth.generators;
 
-import lt.epaslaugos.authentication.client.AuthenticationDataResponse;
+import lt.biip.auth.dto.UserDataResponse;
+import lt.epaslaugos.authentication.client.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 /**
  * Extracts user info from XML.
  */
 public class AuthDataResponseGenerator extends BaseAuthResponseGenerator {
-    public Map<String, String> generateResponse(String data) throws Exception {
+    public UserDataResponse generateResponse(String data) throws Exception {
         AuthenticationDataResponse dataResponse = new AuthenticationDataResponse();
         AuthenticationDataResponse response = (AuthenticationDataResponse) unmarshal(dataResponse, decodeSoap(data));
 
-        Map<String, String> result = new HashMap<>();
+        var userInformation = response.getUserInformation();
+        var authenticationAttributes = response.getAuthenticationAttribute();
 
-        response.getUserInformation().forEach((item) -> {
-            String key = item.getInformation().value();
-            String value = item.getValue().getStringValue();
-            result.put(key, value);
-        });
-
-        response.getAuthenticationAttribute().forEach((item) -> {
-            String key = item.getAttribute().value();
-            String value = item.getValue();
-            result.put(key, value);
-        });
-
-        return result;
+        return new UserDataResponse(
+                getUserInformationValue(userInformation, UserInformation.FIRST_NAME),
+                getUserInformationValue(userInformation, UserInformation.LAST_NAME),
+                getAuthenticationAttribute(authenticationAttributes, AuthenticationAttribute.LT_PERSONAL_CODE),
+                getUserInformationValue(userInformation, UserInformation.EMAIL),
+                getUserInformationValue(userInformation, UserInformation.PHONE_NUMBER),
+                getAuthenticationAttribute(authenticationAttributes, AuthenticationAttribute.LT_COMPANY_CODE),
+                getUserInformationValue(userInformation, UserInformation.COMPANY_NAME)
+        );
     }
+
+    private String getUserInformationValue(List<UserInformationPair> information, UserInformation value) {
+        return information.stream()
+                .filter(v -> v.getInformation() == value)
+                .map(v -> v.getValue().getStringValue()).findFirst()
+                .orElse(null);
+    }
+
+    private String getAuthenticationAttribute(List<AuthenticationAttributePair> attributes, AuthenticationAttribute attribute) {
+        return attributes.stream()
+                .filter(v -> v.getAttribute() == attribute)
+                .map(AuthenticationAttributePair::getValue)
+                .findFirst()
+                .orElse(null);
+    }
+
 }
