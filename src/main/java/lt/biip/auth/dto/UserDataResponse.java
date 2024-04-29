@@ -5,7 +5,7 @@ public record UserDataResponse(
         String lastName,
         String personalCode,
         String email,
-        String phone,
+        String phoneNumber,
         String companyCode,
         String companyName
 ) {
