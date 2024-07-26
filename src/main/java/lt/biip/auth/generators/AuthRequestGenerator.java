@@ -13,7 +13,8 @@ public class AuthRequestGenerator extends BaseAuthRequestGenerator {
     public static final String PID = System.getenv("VIISP_PID");
     public static final String POSTBACK_URL = System.getenv("VIISP_POSTBACK_URL");
 
-    public static void main(String[] args) throws Exception {}
+    public static void main(String[] args) throws Exception {
+    }
 
     public String generateRequest(String customData) throws Exception {
         AuthenticationRequest request = new AuthenticationRequest();
@@ -26,11 +27,17 @@ public class AuthRequestGenerator extends BaseAuthRequestGenerator {
         request.getAuthenticationAttribute().add(AuthenticationAttribute.LT_COMPANY_CODE);
         request.getAuthenticationAttribute().add(AuthenticationAttribute.EIDAS_EID);
 
-        request.getAuthenticationProvider().add(AuthenticationProvider.AUTH_LOGIN_PASS);
-        request.getAuthenticationProvider().add(AuthenticationProvider.AUTH_LT_IDENTITY_CARD);
-        request.getAuthenticationProvider().add(AuthenticationProvider.AUTH_SIGNATURE_PROVIDER);
-        request.getAuthenticationProvider().add(AuthenticationProvider.AUTH_LT_GOVERNMENT_EMPLOYEE_CARD);
+        // Bank
         request.getAuthenticationProvider().add(AuthenticationProvider.AUTH_LT_BANK);
+
+        // With electronic signature
+        request.getAuthenticationProvider().add(AuthenticationProvider.AUTH_SIGNATURE_PROVIDER);
+        request.getAuthenticationProvider().add(AuthenticationProvider.AUTH_LT_IDENTITY_CARD);
+
+        // Other
+        request.getAuthenticationProvider().add(AuthenticationProvider.AUTH_LT_GOVERNMENT_EMPLOYEE_CARD);
+        request.getAuthenticationProvider().add(AuthenticationProvider.AUTH_LOGIN_PASS);
+        request.getAuthenticationProvider().add(AuthenticationProvider.AUTH_EIDAS);
 
         // request.setServiceTarget(ServiceTargetXml.SERVICE_TARGET_BUSINESS);
         request.getUserInformation().add(UserInformation.FIRST_NAME);
