@@ -16,12 +16,8 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 CMD wget -
 
 FROM eclipse-temurin:21-jre
 
-RUN adduser --system --group viisp
-
-COPY --from=build --chown=viisp:viisp /workspace/app/target/viisp-auth-helper-*.jar viisp-auth-helper.jar
+COPY --from=build /workspace/app/target/viisp-auth-helper-*.jar viisp-auth-helper.jar
 
 EXPOSE 8080
-
-USER viisp
 
 CMD ["java", "-jar", "viisp-auth-helper.jar"]
