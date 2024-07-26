@@ -28,6 +28,7 @@ public class AuthRequestGenerator extends BaseAuthRequestGenerator {
 
         request.getAuthenticationProvider().add(AuthenticationProvider.AUTH_LOGIN_PASS);
         request.getAuthenticationProvider().add(AuthenticationProvider.AUTH_LT_IDENTITY_CARD);
+        request.getAuthenticationProvider().add(AuthenticationProvider.AUTH_SIGNATURE_PROVIDER);
         request.getAuthenticationProvider().add(AuthenticationProvider.AUTH_LT_GOVERNMENT_EMPLOYEE_CARD);
         request.getAuthenticationProvider().add(AuthenticationProvider.AUTH_LT_BANK);
 
