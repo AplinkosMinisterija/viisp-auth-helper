@@ -1,7 +1,6 @@
-package lt.epaslaugos.test.auth;
+package lt.biip.auth.generators;
 
-import lt.atea.vaiisis.authentication.model.xml.AuthenticationDataRequestXml;
-import org.apache.commons.lang.StringUtils;
+import lt.epaslaugos.authentication.client.AuthenticationDataRequest;
 import org.w3c.dom.Document;
 
 /**
@@ -9,7 +8,7 @@ import org.w3c.dom.Document;
  */
 public class AuthDataRequestGenerator extends BaseAuthRequestGenerator {
     public String generateRequest(String ticket) throws Exception {
-        AuthenticationDataRequestXml dataRequest = new AuthenticationDataRequestXml();
+        AuthenticationDataRequest dataRequest = new AuthenticationDataRequest();
         dataRequest.setId(SIGNED_NODE_ID);
         dataRequest.setPid(AuthRequestGenerator.PID);
         dataRequest.setIncludeSourceData(true);
