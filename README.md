@@ -21,12 +21,12 @@ VIISP (https://epaslaugos.lt).
 
 ## Environment variables
 
-| Variable name        | Description                                       |
-| -------------------- | ------------------------------------------------- |
-| `VIISP_PID`          | VIISP unique service ID, e.g. `VSID000000006110`  |
-| `VIISP_POSTBACK_URL` | VIISP postback URL, e.g. `https://login.biip.lt/` |
-| `KEYSTORE_BASE64`    | JKS keystore encoded as base64                    |
-| `KEYSTORE_PASSWORD`  | JKS keystore password                             |
+| Variable name        | Description                                      |
+| -------------------- | ------------------------------------------------ |
+| `VIISP_PID`          | VIISP unique service ID, e.g. `VSID000000000000` |
+| `VIISP_POSTBACK_URL` | VIISP postback URL, e.g. `https://website.com/`  |
+| `KEYSTORE_BASE64`    | JKS keystore encoded as base64                   |
+| `KEYSTORE_PASSWORD`  | JKS keystore password                            |
 
 ### **Keep in mind:**
 
@@ -59,3 +59,20 @@ by `customData.host` prop. `ticket` and `customData` are stored as query paramet
 1. [EPaslaugos website (LT)](https://www.epaslaugos.lt/portal/content/1257)
 2. [To understand how it works (LT)](http://9v.lt/blog/viisp-tapatybes-nustatymo-paslauga/)
 3. Certificates are valid up until 2121
+
+### Converting `jks` to `base64`
+💡 Note: replace all `<...>` variables with your own.
+
+1. Convert `jks` to `p12`. 
+
+```shell
+keytool -importkeystore -srckeystore <keystore.jks> -destkeystore <keystore.p12> -srcstoretype JKS -deststoretype PKCS12 -deststorepass <p12_password>
+```
+
+2. Convert `p12` to `base64`
+
+```shell
+base64 -i <keystore.p12>
+```
+
+3. Congrats! 🎉 Now use this base64 value as `KEYSTORE_BASE64` and `<p12_password>` as `KEYSTORE_PASSWORD`
