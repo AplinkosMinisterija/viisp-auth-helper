@@ -36,11 +36,11 @@ public final class AuthProviders {
         try {
             provider = AuthenticationProvider.valueOf(name.trim());
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Unknown authentication provider: " + name);
+            throw new UnknownAuthProviderException("Unknown authentication provider: " + name);
         }
 
         if (!ALL.contains(provider)) {
-            throw new IllegalArgumentException("Unsupported authentication provider: " + name);
+            throw new UnknownAuthProviderException("Unsupported authentication provider: " + name);
         }
 
         return provider;

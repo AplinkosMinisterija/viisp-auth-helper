@@ -32,12 +32,12 @@ class AuthProvidersTest {
     @Test
     void refusesAProviderThatIsNotOffered() {
         assertThrows(
-                IllegalArgumentException.class,
+                UnknownAuthProviderException.class,
                 () -> AuthProviders.resolve(List.of("AUTH_STORK")));
     }
 
     @Test
     void refusesANameThatIsNotAProvider() {
-        assertThrows(IllegalArgumentException.class, () -> AuthProviders.resolve(List.of("bank")));
+        assertThrows(UnknownAuthProviderException.class, () -> AuthProviders.resolve(List.of("bank")));
     }
 }

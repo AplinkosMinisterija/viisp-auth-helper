@@ -6,6 +6,7 @@ import lt.biip.auth.generators.AuthDataRequestGenerator;
 import lt.biip.auth.generators.AuthDataResponseGenerator;
 import lt.biip.auth.generators.AuthRequestGenerator;
 import lt.biip.auth.generators.AuthResponseGenerator;
+import lt.biip.auth.generators.UnknownAuthProviderException;
 import lt.epaslaugos.authentication.client.AuthenticationDataResponse;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -78,8 +79,8 @@ public class AuthController {
         return dataResponse.generateResponse(soap);
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<String> handleUnknownProvider(IllegalArgumentException e) {
+    @ExceptionHandler(UnknownAuthProviderException.class)
+    public ResponseEntity<String> handleUnknownProvider(UnknownAuthProviderException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 }
