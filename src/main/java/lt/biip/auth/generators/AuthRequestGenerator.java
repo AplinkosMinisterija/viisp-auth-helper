@@ -6,6 +6,8 @@ import lt.epaslaugos.authentication.client.AuthenticationRequest;
 import lt.epaslaugos.authentication.client.UserInformation;
 import org.w3c.dom.Document;
 
+import java.util.List;
+
 /**
  * Generates example authenticationRequest XML element.
  */
@@ -17,6 +19,10 @@ public class AuthRequestGenerator extends BaseAuthRequestGenerator {
     }
 
     public String generateRequest(String customData) throws Exception {
+        return generateRequest(customData, null);
+    }
+
+    public String generateRequest(String customData, List<String> providers) throws Exception {
         AuthenticationRequest request = new AuthenticationRequest();
         request.setId(SIGNED_NODE_ID);
 
@@ -27,17 +33,9 @@ public class AuthRequestGenerator extends BaseAuthRequestGenerator {
         request.getAuthenticationAttribute().add(AuthenticationAttribute.LT_COMPANY_CODE);
         request.getAuthenticationAttribute().add(AuthenticationAttribute.EIDAS_EID);
 
-        // Bank
-        request.getAuthenticationProvider().add(AuthenticationProvider.AUTH_LT_BANK);
-
-        // With electronic signature
-        request.getAuthenticationProvider().add(AuthenticationProvider.AUTH_SIGNATURE_PROVIDER);
-        request.getAuthenticationProvider().add(AuthenticationProvider.AUTH_LT_IDENTITY_CARD);
-
-        // Other
-        request.getAuthenticationProvider().add(AuthenticationProvider.AUTH_LT_GOVERNMENT_EMPLOYEE_CARD);
-        request.getAuthenticationProvider().add(AuthenticationProvider.AUTH_LOGIN_PASS);
-        request.getAuthenticationProvider().add(AuthenticationProvider.AUTH_EIDAS);
+        for (AuthenticationProvider provider : AuthProviders.resolve(providers)) {
+            request.getAuthenticationProvider().add(provider);
+        }
 
         // request.setServiceTarget(ServiceTargetXml.SERVICE_TARGET_BUSINESS);
         request.getUserInformation().add(UserInformation.FIRST_NAME);

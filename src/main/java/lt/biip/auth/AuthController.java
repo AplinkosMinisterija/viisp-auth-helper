@@ -6,8 +6,10 @@ import lt.biip.auth.generators.AuthDataRequestGenerator;
 import lt.biip.auth.generators.AuthDataResponseGenerator;
 import lt.biip.auth.generators.AuthRequestGenerator;
 import lt.biip.auth.generators.AuthResponseGenerator;
+import lt.biip.auth.generators.UnknownAuthProviderException;
 import lt.epaslaugos.authentication.client.AuthenticationDataResponse;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.BufferedReader;
@@ -16,6 +18,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 @RestController
 @RequestMapping("/auth")
@@ -50,9 +53,11 @@ public class AuthController {
     }
 
     @PostMapping(path = "/sign", produces = MediaType.APPLICATION_JSON_VALUE)
-    public GenerateTicketResponse generateTicket(@RequestBody String customData) throws Exception {
+    public GenerateTicketResponse generateTicket(@RequestBody String customData,
+                                                 @RequestParam(required = false) List<String> providers)
+            throws Exception {
         AuthRequestGenerator dataRequest = new AuthRequestGenerator();
-        String body = dataRequest.generateSoap(dataRequest.generateRequest(customData));
+        String body = dataRequest.generateSoap(dataRequest.generateRequest(customData, providers));
         String soap = _sendSoapToEpaslaugos(body);
 
         AuthResponseGenerator dataResponse = new AuthResponseGenerator();
@@ -72,6 +77,11 @@ public class AuthController {
         AuthDataResponseGenerator dataResponse = new AuthDataResponseGenerator();
 
         return dataResponse.generateResponse(soap);
+    }
+
+    @ExceptionHandler(UnknownAuthProviderException.class)
+    public ResponseEntity<String> handleUnknownProvider(UnknownAuthProviderException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
 }
 
