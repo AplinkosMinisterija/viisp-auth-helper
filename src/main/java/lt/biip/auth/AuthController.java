@@ -23,8 +23,21 @@ import java.util.List;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
+    // VIISP production by default. VIISP test environment: VIISP_AUTH_SERVICE_URL=
+    // https://test.epaslaugos.lt/services/services/auth, VIISP_LOGIN_URL=
+    // https://test.epaslaugos.lt/portal/external/services/authentication/v2/
+    private static final String AUTH_SERVICE_URL = envOrDefault("VIISP_AUTH_SERVICE_URL",
+            "https://www.epaslaugos.lt/portal/authenticationServices/auth");
+    private static final String LOGIN_URL = envOrDefault("VIISP_LOGIN_URL",
+            "https://www.epaslaugos.lt/portal/external/services/authentication/v2/");
+
+    private static String envOrDefault(String name, String defaultValue) {
+        String value = System.getenv(name);
+        return value == null || value.isBlank() ? defaultValue : value.trim();
+    }
+
     private static String _sendSoapToEpaslaugos(String soap) throws Exception {
-        URL url = new URL("https://www.epaslaugos.lt/portal/authenticationServices/auth");
+        URL url = new URL(AUTH_SERVICE_URL);
         HttpURLConnection http = (HttpURLConnection) url.openConnection();
         http.setRequestMethod("POST");
         http.setDoOutput(true);
@@ -62,7 +75,7 @@ public class AuthController {
 
         AuthResponseGenerator dataResponse = new AuthResponseGenerator();
         String ticket = dataResponse.generateResponse(soap);
-        String epaslaugosHost = "https://www.epaslaugos.lt/portal/external/services/authentication/v2/";
+        String epaslaugosHost = LOGIN_URL;
         var url = String.format("%s?ticket=%s", epaslaugosHost, ticket);
 
         return new GenerateTicketResponse(ticket, epaslaugosHost, url);

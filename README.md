@@ -27,6 +27,27 @@ VIISP (https://epaslaugos.lt).
 | `VIISP_POSTBACK_URL` | VIISP postback URL, e.g. `https://website.com/`  |
 | `KEYSTORE_BASE64`    | JKS keystore encoded as base64                   |
 | `KEYSTORE_PASSWORD`  | JKS keystore password                            |
+| `VIISP_SIGNATURE_ALGORITHM` | `sha256` (default) or `sha1`: algorithm used to sign requests to VIISP (see below) |
+| `VIISP_AUTH_SERVICE_URL` | VIISP SOAP authentication service. Default: production, `https://www.epaslaugos.lt/portal/authenticationServices/auth` |
+| `VIISP_LOGIN_URL` | VIISP page the user is sent to with the ticket. Default: production, `https://www.epaslaugos.lt/portal/external/services/authentication/v2/` |
+
+### Signature algorithm
+
+VIISP stops accepting requests signed with RSA-SHA1 / SHA-1 in its test environment on 2027-02-01 and in production
+on 2027-05-01; from then on requests must be signed with RSA-SHA256 (`SignatureMethod`) and SHA-256 (`DigestMethod`).
+The certificate, the keys and the message structure do not change. The helper signs with SHA-256 by default.
+`VIISP_SIGNATURE_ALGORITHM=sha1` keeps the old algorithm for an environment that cannot switch yet; remove it before
+2027-05-01.
+
+### VIISP test environment
+
+```
+VIISP_AUTH_SERVICE_URL=https://test.epaslaugos.lt/services/services/auth
+VIISP_LOGIN_URL=https://test.epaslaugos.lt/portal/external/services/authentication/v2/
+```
+
+The test environment accepts requests only from IP addresses VSSA has allowed; other addresses get an HTML page
+"Užklausa užblokuota" (HTTP 500).
 
 ### **Keep in mind:**
 
