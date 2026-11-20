@@ -35,9 +35,14 @@ VIISP (https://epaslaugos.lt).
 
 VIISP stops accepting requests signed with RSA-SHA1 / SHA-1 in its test environment on 2027-02-01 and in production
 on 2027-05-01; from then on requests must be signed with RSA-SHA256 (`SignatureMethod`) and SHA-256 (`DigestMethod`).
-The certificate, the keys and the message structure do not change. The helper signs with SHA-256 by default.
-`VIISP_SIGNATURE_ALGORITHM=sha1` keeps the old algorithm for an environment that cannot switch yet; remove it before
-2027-05-01.
+The certificate, the keys and the message structure do not change. The helper signs with SHA-256 by default; VIISP
+production already accepted SHA-256 requests on 2026-11-20 (checked from the BIIP development environment).
+`VIISP_SIGNATURE_ALGORITHM=sha1` keeps the old algorithm for an environment that cannot switch yet. It stops working
+on 2027-02-01 against the VIISP test environment and on 2027-05-01 against production. An invalid value stops the
+helper at startup.
+
+In biip-infra the service lists its environment explicitly, so a new setting has to be added to the
+`viisp-auth-helper` service's `environment` block; a value only in the `.env` file does not reach the container.
 
 ### VIISP test environment
 
@@ -46,7 +51,8 @@ VIISP_AUTH_SERVICE_URL=https://test.epaslaugos.lt/services/services/auth
 VIISP_LOGIN_URL=https://test.epaslaugos.lt/portal/external/services/authentication/v2/
 ```
 
-The test environment accepts requests only from IP addresses VSSA has allowed; other addresses get an HTML page
+Both addresses must be https URLs without a query or fragment (the ticket is appended as `?ticket=...`); anything
+else stops the helper at startup. The test environment accepts requests only from IP addresses VSSA has allowed; other addresses get an HTML page
 "Užklausa užblokuota" (HTTP 500).
 
 ### **Keep in mind:**
