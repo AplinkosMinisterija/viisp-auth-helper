@@ -6,6 +6,8 @@ import lt.epaslaugos.authentication.client.AuthenticationRequest;
 import lt.epaslaugos.authentication.client.UserInformation;
 import org.w3c.dom.Document;
 
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.List;
 
 /**
@@ -14,6 +16,14 @@ import java.util.List;
 public class AuthRequestGenerator extends BaseAuthRequestGenerator {
     public static final String PID = System.getenv("VIISP_PID");
     public static final String POSTBACK_URL = System.getenv("VIISP_POSTBACK_URL");
+
+    public AuthRequestGenerator() {
+        super();
+    }
+
+    AuthRequestGenerator(PrivateKey privateKey, PublicKey publicKey, SignatureAlgorithm signatureAlgorithm) {
+        super(privateKey, publicKey, signatureAlgorithm);
+    }
 
     public static void main(String[] args) throws Exception {
     }

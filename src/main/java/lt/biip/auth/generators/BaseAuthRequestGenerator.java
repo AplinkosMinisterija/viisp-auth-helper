@@ -32,21 +32,22 @@ import java.util.*;
 @SuppressWarnings("restriction")
 public abstract class BaseAuthRequestGenerator {
     public static final String SIGNED_NODE_ID = "uniqueNodeId";
-    private static final char[] PASSWORD = System.getenv("KEYSTORE_PASSWORD").toCharArray();
     private static final XMLSignatureFactory XML_SIGNATURE_FACTORY = XMLSignatureFactory.getInstance("DOM");
 
     protected PrivateKey privateKey = null;
     protected PublicKey publicKey = null;
+    private final SignatureAlgorithm signatureAlgorithm;
 
     public BaseAuthRequestGenerator() {
         try {
+            char[] password = System.getenv("KEYSTORE_PASSWORD").toCharArray();
             KeyStore keyStore = KeyStore.getInstance("JKS");
-            keyStore.load(new ByteArrayInputStream(Base64.getDecoder().decode(System.getenv("KEYSTORE_BASE64"))), PASSWORD);
+            keyStore.load(new ByteArrayInputStream(Base64.getDecoder().decode(System.getenv("KEYSTORE_BASE64"))), password);
 
             for (Enumeration<String> e = keyStore.aliases(); e.hasMoreElements(); ) {
                 String alias = e.nextElement();
                 if (keyStore.isKeyEntry(alias)) {
-                    privateKey = (PrivateKey) keyStore.getKey(alias, PASSWORD);
+                    privateKey = (PrivateKey) keyStore.getKey(alias, password);
                     X509Certificate cert = (X509Certificate) keyStore.getCertificate(alias);
                     publicKey = cert.getPublicKey();
                     break;
@@ -55,6 +56,13 @@ public abstract class BaseAuthRequestGenerator {
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
+        signatureAlgorithm = SignatureAlgorithm.fromEnvironment();
+    }
+
+    protected BaseAuthRequestGenerator(PrivateKey privateKey, PublicKey publicKey, SignatureAlgorithm signatureAlgorithm) {
+        this.privateKey = privateKey;
+        this.publicKey = publicKey;
+        this.signatureAlgorithm = signatureAlgorithm;
     }
 
     public Node marshal(Object data) throws JAXBException {
@@ -89,8 +97,9 @@ public abstract class BaseAuthRequestGenerator {
         transforms.add(fac.newTransform(CanonicalizationMethod.ENVELOPED, (TransformParameterSpec) null));
         transforms.add(fac.newTransform(CanonicalizationMethod.EXCLUSIVE, spec));
 
-        Reference ref = fac.newReference(uri, fac.newDigestMethod(DigestMethod.SHA1, null), transforms, null, null);
-        SignedInfo si = fac.newSignedInfo(fac.newCanonicalizationMethod(CanonicalizationMethod.EXCLUSIVE, spec), fac.newSignatureMethod(SignatureMethod.RSA_SHA1, null),
+        Reference ref = fac.newReference(uri, fac.newDigestMethod(signatureAlgorithm.digestMethod(), null), transforms, null, null);
+        SignedInfo si = fac.newSignedInfo(fac.newCanonicalizationMethod(CanonicalizationMethod.EXCLUSIVE, spec),
+                fac.newSignatureMethod(signatureAlgorithm.signatureMethod(), null),
                 Collections.singletonList(ref));
 
         KeyInfoFactory kif = fac.getKeyInfoFactory();
